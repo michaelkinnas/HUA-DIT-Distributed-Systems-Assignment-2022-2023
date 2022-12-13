@@ -1,66 +1,52 @@
-import { Link, Routes, Route, Navigate } from "react-router-dom";
-import { useState } from "react";
+import { Link, Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { UserContext } from './UserContext'
 import { axiosPost } from "./utils/axiosPost";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import Index from "./components/Index";
-
+import Index from "./components/Home";
+import PrivateRoute from "./privateRoute/privateRoute";
 
 //TODO CONDITIONAL ROUTING ACCORDING TO IF THE USER IS LOGEDIN OR NOT
-
-
-//TEMP STUFF------------------------
-
-const email = 'gougou@gmail.com'
-const password = 'bruh210'
-const firstname = 'Mike'
-const lastname = 'Kinnas'
-
-const REGISTERURL = 'http://localhost:8080/authentication/register'
-const LOGINURL = 'http://localhost:8080/authentication/login'
-
-const payload = {
-  "email": `${email}`,
-  "password": `${password}`,
-  "firstname": `${firstname}`,
-  "lastname": `${lastname}`
-}
-//----------------------------------------
-
 function App() {
   const [userContextData, setUserContextData] = useState({})
+  const [isUserLogedIn, setIsUserLogedIn] = useState(false)
 
   return (
-    <div>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-          <li>
-            <Link to="/register">Register</Link>
-          </li>
-          <li>
-            <Link to="/index">Index</Link>
-          </li>
-          <li>
-            {userContextData.firstname}
-          </li>
-
-        </ul>
-      </nav>
+    <>
+      <div>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">Login</Link>
+            </li>
+            <li>
+              <Link to="/register">Register</Link>
+            </li>
+            <li>
+              <Link to="/home">Home</Link>
+            </li>
+            <li>
+              {userContextData.firstname}
+            </li>
+          </ul>
+        </nav>
+      </div >
 
       <UserContext.Provider value={{ userContextData, setUserContextData }}>
         <Routes>
-          <Route exact path="/" element={userContextData != null ? <Index /> : <Navigate replace to={"/login"} />} />
-
-          <Route path="/login" element={<Login />} />
-          <Route path="/index" element={<Index />} />
+          <Route path="/" element={<Login toggleUserLogedIn={setIsUserLogedIn} userLogedInStatus={isUserLogedIn} />} />
           <Route path="/register" element={<Register />} />
+
+          <Route path="/home" element={
+            <PrivateRoute>
+              <Index />
+            </PrivateRoute>
+          } />
+
         </Routes>
       </UserContext.Provider >
-    </div >
+    </>
 
   );
 }

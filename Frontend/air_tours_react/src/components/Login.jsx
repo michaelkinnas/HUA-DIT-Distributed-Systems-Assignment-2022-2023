@@ -1,16 +1,18 @@
 import React, { useContext, useState } from "react"
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../UserContext";
 import { axiosPost } from "../utils/axiosPost"
 
 
 
-function Login() {
+function Login(props) {
     const { userContextData, setUserContextData } = useContext(UserContext); //use this to update user context
     const [loginForm, setLoginForm] = useState({
         email: '',
         password: ''
     })
     const [error, setError] = useState('')
+    const navigate = useNavigate()
 
     const handleChange = (event) => {
         const name = event.target.name;
@@ -45,12 +47,14 @@ function Login() {
                         roles: response.data.roles
                     }
                     setUserContextData(userData)
+                    navigate("/home") //TEMP SOLUTION
+
+
+                    // props.toggleUserLogedIn(true);
+                    // console.log(props.userLogedInStatus)
                 }
             }
             fetchData();
-
-
-
         }
     }
 
@@ -64,13 +68,12 @@ function Login() {
                 <label htmlFor="password">Password:</label>
                 <input type="text" name="password" id="password" className="login-input-text" onChange={handleChange} value={loginForm.password} />
 
-                <input type="submit" name="login" id="login" className="login-button" onClick={handleSubmit} />
+                <input value="Login" type="submit" name="login" id="login" className="login-button" onClick={handleSubmit} />
             </form>
             <div className="login-error-feedback">
                 <b>{error}</b>
             </div>
         </div>
-
     )
 }
 
