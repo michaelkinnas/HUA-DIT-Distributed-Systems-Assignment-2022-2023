@@ -1,22 +1,22 @@
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 import { UserContext } from "../UserContext";
-
-
+import { axiosPost } from "../utils/axiosPost"
 
 function Index() {
-    //testvalue name must be the same as in the UserContext file
-    const { testValue } = useContext(UserContext);
-
-
+    const { userContextData, setUserContextData } = useContext(UserContext)
 
     return (
         <div>
-            <h2>Index page</h2>
-            <h2>{testValue}</h2>
+            <h1>User sucessfully loged in !!!</h1>
+            <h2>{userContextData.email}</h2>
+            <h2>{userContextData.firstname}</h2>
+            <h2>{userContextData.lastname}</h2>
+            <h2>{userContextData.accessToken}</h2>
+            <h2>{userContextData.tokenType}</h2>
+            <h2>{userContextData.roles}</h2>
         </div>
-
     )
 }
 
-export default Index;
 
+export default Index;
