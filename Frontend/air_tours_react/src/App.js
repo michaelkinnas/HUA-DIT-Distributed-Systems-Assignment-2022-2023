@@ -1,66 +1,42 @@
-import { Link, Routes, Route, Navigate } from "react-router-dom";
-import { useState } from "react";
+import { Link, Routes, Route } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { UserContext } from './UserContext'
-import { axiosPost } from "./utils/axiosPost";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import Index from "./components/Index";
-
-
-//TODO CONDITIONAL ROUTING ACCORDING TO IF THE USER IS LOGEDIN OR NOT
-
-
-//TEMP STUFF------------------------
-
-const email = 'gougou@gmail.com'
-const password = 'bruh210'
-const firstname = 'Mike'
-const lastname = 'Kinnas'
-
-const REGISTERURL = 'http://localhost:8080/authentication/register'
-const LOGINURL = 'http://localhost:8080/authentication/login'
-
-const payload = {
-  "email": `${email}`,
-  "password": `${password}`,
-  "firstname": `${firstname}`,
-  "lastname": `${lastname}`
-}
-//----------------------------------------
+import Home from "./components/Home";
+import LogedUserRoute from "./protectedRoutes/logedUserRoute";
+import Navbar from "./components/Navbar";
+import AdminRoute from "./protectedRoutes/adminRoute";
+import AdminPanel from "./components/AdminPanel";
 
 function App() {
   const [userContextData, setUserContextData] = useState({})
+  const [isUserLogedIn, setIsUserLogedIn] = useState(false)
 
   return (
-    <div>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-          <li>
-            <Link to="/register">Register</Link>
-          </li>
-          <li>
-            <Link to="/index">Index</Link>
-          </li>
-          <li>
-            {userContextData.firstname}
-          </li>
-
-        </ul>
-      </nav>
-
+    <>
       <UserContext.Provider value={{ userContextData, setUserContextData }}>
+        <Navbar />
         <Routes>
-          <Route exact path="/" element={userContextData != null ? <Index /> : <Navigate replace to={"/login"} />} />
-
-          <Route path="/login" element={<Login />} />
-          <Route path="/index" element={<Index />} />
+          <Route path="/" element={<Login toggleUserLogedIn={setIsUserLogedIn} userLogedInStatus={isUserLogedIn} />} />
           <Route path="/register" element={<Register />} />
+
+          <Route path="/home" element={
+            <LogedUserRoute>
+              <Home /> {/* children of <ProtectedRoute> component */}
+            </LogedUserRoute>
+          } />
+
+          <Route path="/admin" element={
+            <AdminRoute>
+              {/* TODO CREATE ADMIN PANEL COMPONENT */}
+              <AdminPanel />
+            </AdminRoute>
+          } />
+
         </Routes>
       </UserContext.Provider >
-    </div >
+    </>
 
   );
 }
