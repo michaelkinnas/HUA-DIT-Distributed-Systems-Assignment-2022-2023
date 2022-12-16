@@ -5,7 +5,7 @@ import { axiosPost } from "../utils/axiosPost"
 
 
 
-function Login(props) {
+function Login() {
     const { userContextData, setUserContextData } = useContext(UserContext); //use this to update user context
     const [loginForm, setLoginForm] = useState({
         email: '',

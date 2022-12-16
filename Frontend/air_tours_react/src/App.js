@@ -1,47 +1,37 @@
-import { Link, Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { Link, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { UserContext } from './UserContext'
-import { axiosPost } from "./utils/axiosPost";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import Index from "./components/Home";
-import PrivateRoute from "./privateRoute/privateRoute";
+import Home from "./components/Home";
+import LogedUserRoute from "./protectedRoutes/logedUserRoute";
+import Navbar from "./components/Navbar";
+import AdminRoute from "./protectedRoutes/adminRoute";
+import AdminPanel from "./components/AdminPanel";
 
-//TODO CONDITIONAL ROUTING ACCORDING TO IF THE USER IS LOGEDIN OR NOT
 function App() {
   const [userContextData, setUserContextData] = useState({})
   const [isUserLogedIn, setIsUserLogedIn] = useState(false)
 
   return (
     <>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Login</Link>
-            </li>
-            <li>
-              <Link to="/register">Register</Link>
-            </li>
-            <li>
-              <Link to="/home">Home</Link>
-            </li>
-            <li>
-              {userContextData.firstname}
-            </li>
-          </ul>
-        </nav>
-      </div >
-
       <UserContext.Provider value={{ userContextData, setUserContextData }}>
+        <Navbar />
         <Routes>
           <Route path="/" element={<Login toggleUserLogedIn={setIsUserLogedIn} userLogedInStatus={isUserLogedIn} />} />
           <Route path="/register" element={<Register />} />
 
           <Route path="/home" element={
-            <PrivateRoute>
-              <Index />
-            </PrivateRoute>
+            <LogedUserRoute>
+              <Home /> {/* children of <ProtectedRoute> component */}
+            </LogedUserRoute>
+          } />
+
+          <Route path="/admin" element={
+            <AdminRoute>
+              {/* TODO CREATE ADMIN PANEL COMPONENT */}
+              <AdminPanel />
+            </AdminRoute>
           } />
 
         </Routes>

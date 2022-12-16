@@ -2,11 +2,8 @@ import React, { useContext, useState } from "react"
 import { UserContext } from "../UserContext";
 import { axiosPost } from "../utils/axiosPost"
 
-function Index() {
+function Home() {
     const { userContextData, setUserContextData } = useContext(UserContext)
-
-
-
 
     return (
         <div>
@@ -23,4 +20,4 @@ function Index() {
 }
 
 
-export default Index;
+export default Home;
