@@ -2,11 +2,14 @@ import React, { useContext, useState } from "react"
 import { UserContext } from "../UserContext";
 import { axiosPost } from "../utils/axiosPost"
 
+
+
 function Home() {
     const { userContextData, setUserContextData } = useContext(UserContext)
 
     return (
         <div>
+
             {userContextData.accessToken ? <h1> User sucessfully loged in !!!</h1> : <h1>User not logged in</h1>}
             {/* <h1>User sucessfully loged in !!!</h1> */}
             <h2>{userContextData.email}</h2>

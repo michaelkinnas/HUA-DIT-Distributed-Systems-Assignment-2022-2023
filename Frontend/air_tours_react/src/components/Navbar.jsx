@@ -5,13 +5,16 @@ import { useContext } from "react"
 export default function Navbar() {
     const { userContextData, setUserContextData } = useContext(UserContext);
 
+    const logout = () => {
+        setUserContextData({});
+    }
 
     return (
         <div>
             <nav>
                 <ul>
                     <li>
-                        <Link to="/">Login</Link>
+                        {userContextData.accessToken ? <Link to="/" onClick={logout}>Logout</Link> : <Link to="/" >Login</Link>}
                     </li>
                     <li>
                         <Link to="/register">Register</Link>
@@ -19,10 +22,10 @@ export default function Navbar() {
                     <li>
                         <Link to="/home">Home</Link>
                     </li>
-                    <li>
-                        {userContextData.firstname}
-                    </li>
                 </ul>
+                <div className="user-name">
+                    {userContextData.firstname} {userContextData.lastname}
+                </div>
             </nav>
         </div >
     )

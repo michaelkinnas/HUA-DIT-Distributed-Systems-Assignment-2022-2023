@@ -2,6 +2,11 @@ import React, { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../UserContext";
 import { axiosPost } from "../utils/axiosPost"
+import axios from 'axios';
+
+
+
+
 
 
 
@@ -11,8 +16,6 @@ function Login() {
         email: '',
         password: ''
     })
-    const [error, setError] = useState('')
-    const navigate = useNavigate()
 
     const handleChange = (event) => {
         const name = event.target.name;
@@ -24,6 +27,9 @@ function Login() {
         setError('') //clear error message
     }
 
+    const [error, setError] = useState('')
+    const navigate = useNavigate()
+
     const handleSubmit = (event) => {
         event.preventDefault();
 
@@ -33,10 +39,9 @@ function Login() {
             const LOGIN_URL = 'http://localhost:8080/authentication/login'
 
             async function fetchData() {
-                const response = await axiosPost(LOGIN_URL, loginForm)
-
-                if (response.status === 200) {
-                    console.log(response.data);
+                // const response = await axiosPost(URL, loginForm)
+                try {
+                    const response = await axios.post(LOGIN_URL, loginForm);
 
                     const userData = {
                         email: response.data.email,
@@ -49,18 +54,37 @@ function Login() {
                     setUserContextData(userData)
                     navigate("/home") //TEMP SOLUTION
 
-
-                    // props.toggleUserLogedIn(true);
-                    // console.log(props.userLogedInStatus)
+                    // console.log(response.data);
+                } catch (error) {
+                    setError(error.response.data.message) //how to get body from axios error (really?)
                 }
+
+
+                // if (response.status === 200) {
+                //     console.log(response.data);
+
+                //     const userData = {
+                //         email: response.data.email,
+                //         firstname: response.data.firstname,
+                //         lastname: response.data.lastname,
+                //         accessToken: response.data.accessToken,
+                //         tokenType: response.data.tokenType,
+                //         roles: response.data.roles
+                //     }
+                //     setUserContextData(userData)
+                //     navigate("/home") //TEMP SOLUTION
+                // }
             }
             fetchData();
+
         }
     }
 
 
     return (
         <div className="login-component">
+
+
             <form className="login-form">
                 <label htmlFor="email">e-mail:</label>
                 <input type="text" name="email" id="email" className="login-input-text" onChange={handleChange} value={loginForm.email} />

@@ -7,7 +7,7 @@ export default data = {
             aircraft: {
                 id: "12",
                 type: "Cessna Skylane 182",
-                regisrtation: "SX-DAF",
+                registration: "SX-DAF",
                 seats: "3",
             },
             pilot: {
@@ -41,7 +41,7 @@ export default data = {
             aircraft: {
                 id: "12",
                 type: "Cessna Skylane 182",
-                regisrtation: "SX-DAF",
+                registration: "SX-DAF",
                 seats: "3",
             },
             pilot: {

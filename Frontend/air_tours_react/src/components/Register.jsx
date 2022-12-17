@@ -2,20 +2,14 @@ import React, { useContext, useState } from "react"
 import { UserContext } from "../UserContext";
 import { axiosPost } from "../utils/axiosPost"
 
-
-
 function Register() {
-
     // const { userContextData, setUserContextData } = useContext(UserContext)
-
     const [registerForm, setRegisterForm] = useState({
         email: '',
         password: '',
         firstname: '',
         lastname: ''
     })
-
-    const [error, setError] = useState('')
 
     const handleChange = (event) => {
         const name = event.target.name;
@@ -27,20 +21,30 @@ function Register() {
         setError('') //clear error message
     }
 
+    const [error, setError] = useState('')
+
     const handleSubmit = (event) => {
         event.preventDefault();
 
         if (registerForm.email === '' || registerForm.password === '') {
             setError('You must provide an email and password')
         } else {
-            const LOGIN_URL = 'http://localhost:8080/authentication/register'
+            const REGISTER_URL = 'http://localhost:8080/authentication/register'
 
             async function fetchData() {
-                const response = await axiosPost(LOGIN_URL, registerForm)
+                // const response = await axiosPost(REGISTER_URL, registerForm)
 
-                if (response.status === 200) {
+                // if (response.status === 200) {
+                //     console.log(response.data); //DEBUG purposes
+                // }
+                try {
+                    const response = await axiosPost(REGISTER_URL, registerForm)
                     console.log(response.data);
+                } catch (error) {
+                    setError(error.response.data.message) //how to get body from axios error (really?)
                 }
+
+
             }
             fetchData();
         }
