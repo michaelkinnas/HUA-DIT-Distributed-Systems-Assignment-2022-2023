@@ -8,31 +8,25 @@ import LogedUserRoute from "./protectedRoutes/logedUserRoute";
 import Navbar from "./components/Navbar";
 import AdminRoute from "./protectedRoutes/adminRoute";
 import AdminPanel from "./components/AdminPanel";
+import NoAdminRightsPage from "./components/NoAdminRightsPage";
 
 function App() {
   const [userContextData, setUserContextData] = useState({})
-  const [isUserLogedIn, setIsUserLogedIn] = useState(false)
 
   return (
     <>
       <UserContext.Provider value={{ userContextData, setUserContextData }}>
         <Navbar />
+
         <Routes>
-          <Route path="/" element={<Login toggleUserLogedIn={setIsUserLogedIn} userLogedInStatus={isUserLogedIn} />} />
+          {/* <Route path="/" element={<Login toggleUserLogedIn={setIsUserLogedIn} userLogedInStatus={isUserLogedIn} />} /> */}
+          <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/noadminrights" element={<NoAdminRightsPage />} />
 
-          <Route path="/home" element={
-            <LogedUserRoute>
-              <Home /> {/* children of <ProtectedRoute> component */}
-            </LogedUserRoute>
-          } />
+          <Route path="/home" element={<LogedUserRoute><Home /></LogedUserRoute>} />
 
-          <Route path="/admin" element={
-            <AdminRoute>
-              {/* TODO CREATE ADMIN PANEL COMPONENT */}
-              <AdminPanel />
-            </AdminRoute>
-          } />
+          <Route path="/admin" element={<AdminRoute><AdminPanel /></AdminRoute>} />
 
         </Routes>
       </UserContext.Provider >
