@@ -8,7 +8,6 @@ public class AirToursApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AirToursApplication.class, args);
-		//test 1 2
 	}
 
 }
