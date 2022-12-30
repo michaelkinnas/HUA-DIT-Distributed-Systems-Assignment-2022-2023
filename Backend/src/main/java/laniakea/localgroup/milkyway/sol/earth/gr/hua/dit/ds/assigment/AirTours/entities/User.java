@@ -6,31 +6,43 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="users")
 public class User {
 
+    // define fields
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="user_id")
     private int id;
 
     @Column(name="first_name")
+    @NotBlank(message="Please enter the first name")
+    @Size(max =30, message= "Name should not be greater than 30 characters")
     private String firstName;
 
     @Column(name="last_name")
+    @NotBlank(message="Please enter the last name")
+    @Size(max =30, message= "Name should not be greater than 30 characters")
     private String lastName;
 
-    @Column(name="email")
+    @Column(name="email", unique = true)
+    @Email(message = "Please enter a valid email")  // It checks the email format, to be valid.
+    @Size(max = 50)
     private String email;
 
-    @Column(name="username")
+    @Column(name="username", unique = true)
+    @Size(max = 30)
     private String username;
 
     @Column(name="password")
     private String password;
 
+    // define constructors
     public User() {}
 
     public User(String firstName, String lastName, String email, String username, String password) {
@@ -41,6 +53,7 @@ public class User {
         this.password = password;
     }
 
+    // define getters-setters
     public int getId() {
         return id;
     }
@@ -81,6 +94,7 @@ public class User {
         this.username = username;
     }
 
+    // print fields
     public String toString() {
         return "User [id= " + id + ", firstName= " + firstName + ", " +
                 "lastName= " + lastName + ", email= " + email + "] - username= " + username;

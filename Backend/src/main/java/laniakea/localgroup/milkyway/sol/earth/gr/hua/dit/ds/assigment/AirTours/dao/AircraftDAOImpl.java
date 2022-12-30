@@ -1,6 +1,6 @@
 package laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.dao;
 
-import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.entities.User;
+import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.entities.Aircraft;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -11,38 +11,38 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 // For class level methods that communicate with the db
-// Repository is sublass of Component annotation
-// @Repository is for the controller to be able to find it.
 @Repository
-public class UserDAOImpl implements UserDAO {
+public class AircraftDAOImpl implements AircraftDAO {
+
     @Autowired
     private EntityManager entityManager;
 
     // for method level, to begin and commit a transaction automatically
     @Override
     @Transactional
-    public List<User> getAllUsers() {
+    public List<Aircraft> getAllAircrafts() {
         Session session = entityManager.unwrap(Session.class);
-        Query query = session.createQuery("from User", User.class);
-        List<User> users = query.getResultList();
-        return users;
+        Query query = session.createQuery("from Aircraft", Aircraft.class);
+        List<Aircraft> aircrafts = query.getResultList();
+        return aircrafts;
     }
 
     @Override
     @Transactional
-    public void save(User user) {
-        User auser = entityManager.merge(user);
+    public void save(Aircraft aircraft) {
+        Aircraft anaircraft = entityManager.merge(aircraft);
     }
 
     @Override
     @Transactional
-    public User findById(int id) {
-        return entityManager.find(User.class, id);
+    public Aircraft findById(int id) {
+        return entityManager.find(Aircraft.class, id);
     }
 
     @Override
     @Transactional
-    public void delete(User user) {
-        entityManager.remove(user);
+    public void delete(Aircraft aircraft) {
+        entityManager.remove(aircraft);
+
     }
 }
