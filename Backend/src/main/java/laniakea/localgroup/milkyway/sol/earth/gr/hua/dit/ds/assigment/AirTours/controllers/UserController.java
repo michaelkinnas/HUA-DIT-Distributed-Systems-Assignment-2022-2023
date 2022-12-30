@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 // RestController manages JSONs
 @RestController
@@ -23,8 +22,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     User get(@PathVariable int id) {
-        User user = userRepository.findById(id);
-        return user;
+        return userRepository.findById(id);
     }
 
     @PostMapping("")
@@ -53,12 +51,7 @@ public class UserController {
 
 
 
-
-
-
-
-
-    // Repository Owned the methods below.
+//      Repository Owned the methods below.
 //    @Autowired
 //    private UserDAOImpl userDAOImpl;
 //

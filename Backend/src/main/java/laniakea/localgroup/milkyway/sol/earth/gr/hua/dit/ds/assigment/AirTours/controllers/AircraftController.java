@@ -1,9 +1,6 @@
 package laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.controllers;
 
-import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.dao.AircraftDAO;
-import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.dao.AircraftDAOImpl;
 import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.entities.Aircraft;
-import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.entities.User;
 import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.repository.AircraftRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/aircraft")
+@RequestMapping("/aircrafts")
 public class AircraftController {
 
     @Autowired
@@ -24,8 +21,7 @@ public class AircraftController {
 
     @GetMapping("/{id}")
     Aircraft get(@PathVariable int id) {
-        Aircraft aircraft = aircraftRepository.findById(id);
-        return aircraft;
+        return aircraftRepository.findById(id);
     }
 
     @PostMapping("")
@@ -51,7 +47,7 @@ public class AircraftController {
     }
 
 
-    // Owned by Repository
+//      Owned by Repository
 //    @Autowired
 //    private AircraftDAOImpl aircraftDAOImpl;
 //

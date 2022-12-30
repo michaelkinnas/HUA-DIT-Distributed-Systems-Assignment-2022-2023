@@ -1,8 +1,6 @@
 package laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.controllers;
 
-import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.dao.TourDAOImpl;
 import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.entities.Tour;
-import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.entities.User;
 import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.repository.TourRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +21,7 @@ public class TourController {
 
     @GetMapping("/{id}")
     Tour get(@PathVariable int id) {
-        Tour tour = tourRepository.findById(id);
-        return tour;
+        return tourRepository.findById(id);
     }
 
     @PostMapping("")
@@ -52,7 +49,7 @@ public class TourController {
 
 
 
-    // Owned by Repository
+//      Owned by Repository
 //    @Autowired
 //    private TourDAOImpl tourDAOImpl;
 //
