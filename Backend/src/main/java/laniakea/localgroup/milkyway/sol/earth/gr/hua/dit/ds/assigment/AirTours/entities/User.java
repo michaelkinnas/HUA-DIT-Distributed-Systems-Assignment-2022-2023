@@ -1,14 +1,10 @@
 package laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name="users")
@@ -41,6 +37,9 @@ public class User {
 
     @Column(name="password")
     private String password;
+
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.MERGE, CascadeType.PERSIST})
+    private List<ActiveTour> activetours;
 
     // define constructors
     public User() {}
@@ -92,6 +91,14 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public List<ActiveTour> getActiveTours() {
+        return activetours;
+    }
+
+    public void setActivetours(List<ActiveTour> activetours) {
+        this.activetours = activetours;
     }
 
     // print fields
