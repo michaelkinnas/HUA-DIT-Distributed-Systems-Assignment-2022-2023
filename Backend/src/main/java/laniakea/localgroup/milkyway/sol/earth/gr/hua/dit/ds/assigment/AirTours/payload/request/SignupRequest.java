@@ -26,8 +26,10 @@ public class SignupRequest {
     private Set<String> role;
 
     @NotBlank
-    @Size(min = 6, max = 40)
+    @Size(max=120)
     private String password;
+
+    private boolean enabled;
 
     public String getUsername() {
         return username;
@@ -77,4 +79,7 @@ public class SignupRequest {
         this.role = role;
     }
 
+    public boolean getEnabled() {
+        return enabled;
+    }
 }

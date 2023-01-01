@@ -1,5 +1,7 @@
 package laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.entities;
 
+import org.springframework.data.annotation.PersistenceConstructor;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -18,6 +20,11 @@ public class User {
     @Column(name="user_id")
     private int id;
 
+
+    @Column(name="username", unique = true)
+    @Size(max = 30)
+    private String username;
+
     @Column(name="first_name")
     @NotBlank(message="Please enter the first name")
     @Size(max =30, message= "Name should not be greater than 30 characters")
@@ -34,11 +41,6 @@ public class User {
     private String email;
 
     @NotBlank
-    @Column(name="username", unique = true)
-    @Size(max = 30)
-    private String username;
-
-    @NotBlank
     @Size(max = 120)
     @Column(name="password")
     private String password;
@@ -52,17 +54,23 @@ public class User {
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.MERGE, CascadeType.PERSIST})
     private List<ActiveTour> activetours;
 
-    // define constructors
-    public User(){}
-    public User(String username, String email, String encode) {}
+    @Column(name = "enabled")
+    private boolean enabled;
 
-    public User(String firstName, String lastName, String email, String username, String password) {
+    public User() {}
+
+    public User(String username, String firstName, String lastName, String email, boolean enabled, String encode) {
+        this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.username = username;
-        this.password = password;
+        this.enabled = enabled;
+        this.password = encode;
+
     }
+
+    // define constructors
+
 
     // define getters-setters
     public int getId() {

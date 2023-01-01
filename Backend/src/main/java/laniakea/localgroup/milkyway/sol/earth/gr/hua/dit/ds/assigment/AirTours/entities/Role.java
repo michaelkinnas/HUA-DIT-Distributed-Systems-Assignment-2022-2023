@@ -11,7 +11,7 @@ public class Role {
     private int id;
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 20)
+    @Column(name = "name", length = 20)
     private EnRole name;
 
     public Role(){}
