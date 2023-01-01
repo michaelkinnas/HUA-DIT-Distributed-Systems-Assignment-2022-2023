@@ -4,7 +4,9 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="users")
@@ -31,18 +33,28 @@ public class User {
     @Size(max = 50)
     private String email;
 
+    @NotBlank
     @Column(name="username", unique = true)
     @Size(max = 30)
     private String username;
 
+    @NotBlank
+    @Size(max = 120)
     @Column(name="password")
     private String password;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_roles",
+                joinColumns = @JoinColumn(name = "user_id"),
+                inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.MERGE, CascadeType.PERSIST})
     private List<ActiveTour> activetours;
 
     // define constructors
-    public User() {}
+    public User(){}
+    public User(String username, String email, String encode) {}
 
     public User(String firstName, String lastName, String email, String username, String password) {
         this.firstName = firstName;
@@ -99,6 +111,18 @@ public class User {
 
     public void setActivetours(List<ActiveTour> activetours) {
         this.activetours = activetours;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     // print fields

@@ -46,34 +46,4 @@ public class AircraftController {
         aircraftRepository.deleteById(id);
     }
 
-
-//      Owned by Repository
-//    @Autowired
-//    private AircraftDAOImpl aircraftDAOImpl;
-//
-//    // The '' goes after '/aircraft' because it's method level mapping.
-//    @GetMapping("")
-//    List<Aircraft> getAircrafts() {
-//        return aircraftDAOImpl.getAllAircrafts();
-//    }
-//
-//    @GetMapping("/{id}")
-//    Aircraft get(@PathVariable int id) {
-//        Aircraft aircraft = aircraftDAOImpl.findById(id);
-//        return aircraft;
-//    }
-//
-//    @PostMapping("")
-//    Aircraft save(@RequestBody Aircraft aircraft) {
-//        aircraft.setId(0);
-//        aircraftDAOImpl.save(aircraft);
-//        return aircraft;
-//    }
-//
-//    @DeleteMapping("/{id}")
-//    Aircraft delete(@PathVariable int id) {
-//        Aircraft aircraft = aircraftDAOImpl.findById(id);
-//        aircraftDAOImpl.delete(aircraft);
-//        return aircraft;
-//    }
 }
