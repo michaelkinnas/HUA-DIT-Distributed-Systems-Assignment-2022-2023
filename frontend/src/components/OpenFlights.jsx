@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
+import FlightCard from './FlightCard';
+import './OpenFlights.css'
 
-
-export default function OpenFlights() {
+export default function OpenFlights(props) {
 
 
     return (
         <section className="open-flights">
-            <h1>Here go the flight cards</h1>
+            {props.data.map((flight) => (
+                <FlightCard key={flight.id} flight={flight} />
+            ))}
+
+
 
         </section>
     )
