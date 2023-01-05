@@ -1,14 +1,14 @@
 package laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.springframework.data.annotation.PersistenceConstructor;
+
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="users")
@@ -19,6 +19,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="user_id")
     private int id;
+
+
+    @Column(name="username", unique = true)
+    @Size(max = 30)
+    private String username;
 
     @Column(name="first_name")
     @NotBlank(message="Please enter the first name")
@@ -35,23 +40,37 @@ public class User {
     @Size(max = 50)
     private String email;
 
-    @Column(name="username", unique = true)
-    @Size(max = 30)
-    private String username;
-
+    @NotBlank
+    @Size(max = 120)
     @Column(name="password")
     private String password;
 
-    // define constructors
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_roles",
+                joinColumns = @JoinColumn(name = "user_id"),
+                inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
+
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.MERGE, CascadeType.PERSIST})
+    private List<ActiveTour> activetours;
+
+    @Column(name = "enabled")
+    private boolean enabled;
+
     public User() {}
 
-    public User(String firstName, String lastName, String email, String username, String password) {
+    public User(String username, String firstName, String lastName, String email, boolean enabled, String encode) {
+        this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.username = username;
-        this.password = password;
+        this.enabled = enabled;
+        this.password = encode;
+
     }
+
+    // define constructors
+
 
     // define getters-setters
     public int getId() {
@@ -92,6 +111,26 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public List<ActiveTour> getActiveTours() {
+        return activetours;
+    }
+
+    public void setActivetours(List<ActiveTour> activetours) {
+        this.activetours = activetours;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     // print fields

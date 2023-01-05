@@ -46,36 +46,4 @@ public class TourController {
         tourRepository.deleteById(id);
     }
 
-
-
-
-//      Owned by Repository
-//    @Autowired
-//    private TourDAOImpl tourDAOImpl;
-//
-//    // The '' goes after '/tours' because it's method level mapping.
-//    @GetMapping("")
-//    List<Tour> getTours() {
-//        return tourDAOImpl.getAllTours();
-//    }
-//
-//    @GetMapping("/{id}")
-//    Tour get(@PathVariable int id) {
-//        Tour tour = tourDAOImpl.findById(id);
-//        return tour;
-//    }
-//
-//    @PostMapping("")
-//    Tour save(@RequestBody Tour tour) {
-//        tour.setId(0);
-//        tourDAOImpl.save(tour);
-//        return tour;
-//    }
-//
-//    @DeleteMapping("/{id}")
-//    Tour delete(@PathVariable int id) {
-//        Tour tour = tourDAOImpl.findById(id);
-//        tourDAOImpl.delete(tour);
-//        return tour;
-//    }
 }

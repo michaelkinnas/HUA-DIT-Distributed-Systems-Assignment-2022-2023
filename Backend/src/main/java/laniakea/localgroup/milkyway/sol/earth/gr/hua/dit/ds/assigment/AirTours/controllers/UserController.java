@@ -48,36 +48,4 @@ public class UserController {
         userRepository.deleteById(id);
     }
 
-
-
-
-//      Repository Owned the methods below.
-//    @Autowired
-//    private UserDAOImpl userDAOImpl;
-//
-//    // The '' goes after '/users' because it's method level mapping. (sub-mapping)
-//    @GetMapping("")
-//    List<User> getUsers() {
-//        return userDAOImpl.getAllUsers();
-//    }
-//
-//    @GetMapping("/{id}")
-//    User get(@PathVariable int id) {
-//        User user = userDAOImpl.findById(id);
-//        return user;
-//    }
-//
-//    @PostMapping("")
-//    User save(@RequestBody User user) {
-//        user.setId(0);
-//        userDAOImpl.save(user);
-//        return user;
-//    }
-//
-//    @DeleteMapping("/{id}")
-//    User delete(@PathVariable int id) {
-//        User user = userDAOImpl.findById(id);
-//        userDAOImpl.delete(user);
-//        return user;
-//    }
 }
