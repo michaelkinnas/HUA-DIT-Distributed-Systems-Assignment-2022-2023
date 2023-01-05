@@ -35,7 +35,7 @@ function Login() {
             async function fetchData() {
                 // const response = await axiosPost(URL, loginForm)
                 try {
-                    const response = await axios.post(LOGIN_URL, loginForm);
+                    const response = await axios.post(process.env.REACT_APP_AUTHORITY_URL + process.env.REACT_APP_LOGIN_URL, loginForm);
 
                     const userData = {
                         email: response.data.email,

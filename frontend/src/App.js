@@ -1,7 +1,7 @@
 import { Link, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { UserContext } from './UserContext'
-import './App.css'
+// import './App.css'
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Home from "./components/Home";

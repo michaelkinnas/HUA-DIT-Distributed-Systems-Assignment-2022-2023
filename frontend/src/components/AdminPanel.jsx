@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import AddAircraftForm from './AddAircraftForm'
 import AddTourForm from './AddTourForm'
-import SetUserRoles from "./SetUserRoles";
+import AdjustUserRoles from "./AdjustUserRoles";
 
 
 
@@ -10,7 +10,7 @@ export default function AdminPanel() {
 
     let activeAdminFunctionPage
     if (adminFunction === "1") {
-        activeAdminFunctionPage = <SetUserRoles />
+        activeAdminFunctionPage = <AdjustUserRoles />
     } else if (adminFunction === "2") {
         activeAdminFunctionPage = <AddTourForm />
     } else {
@@ -18,14 +18,14 @@ export default function AdminPanel() {
     }
 
     const handleSelection = (event) => {
-        console.log(event.currentTarget.id)
+        // console.log(event.currentTarget.id)
         setAdminFunction(event.currentTarget.id)
     }
 
 
     return (
         <div className="admin-panel">
-            <h1>Hello</h1>
+            <h4>Admin functions</h4>
             <div className="button-row">
                 <button type="button" id="1" onClick={handleSelection}>User Roles</button>
                 <button type="button" id="2" onClick={handleSelection}>Add Tour</button>

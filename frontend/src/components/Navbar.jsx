@@ -22,6 +22,9 @@ export default function Navbar() {
                     <li>
                         <Link to="/home">Home</Link>
                     </li>
+                    <li>
+                        <Link to="/admin">Admin</Link>
+                    </li>
                 </ul>
                 <div className="user-name">
                     {userContextData.firstname} {userContextData.lastname}

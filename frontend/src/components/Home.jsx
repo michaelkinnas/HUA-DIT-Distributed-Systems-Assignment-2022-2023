@@ -11,13 +11,13 @@ function Home() {
     useEffect(() => {
         // const response = axios.get(process.env.AUTHORITY_URL + process.env.ACTIVE_TOURS_URL)
 
-        let config = {
+        const config = {
             headers: { Authorization: `Bearer ${userContextData.accessToken}` }
         }
 
-        async function fetchData() {
+        async function callAPI() {
             try {
-                const response = await axios.get('http://localhost:8080/home/tours', config)
+                const response = await axios.get(process.env.REACT_APP_AUTHORITY_URL + process.env.REACT_APP_ACTIVE_TOURS_URL, config)
                 setOpenFlights(response.data)
                 // console.log(response.data)
 
@@ -25,7 +25,7 @@ function Home() {
                 console.log(error.response.data.message) //how to get body from axios error (really?)
             }
         }
-        fetchData()
+        callAPI()
     }, [])
 
 

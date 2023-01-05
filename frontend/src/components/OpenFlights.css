@@ -1,6 +1,23 @@
-.open-flights {
-    margin: auto;
-    width: 50%;
-    border: 3px solid green;
-    padding: 10px;
+.flight-card-table {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: small;
+    margin: 10px;
+    padding: 5px;
+    table-layout: fixed;
+    border-collapse: collapse;
+    margin: 5px;
+    width: 60%;
+    border-radius: 10px;
+    border-color: rgb(69, 69, 69);
+
+    border: 1px solid;
+    
+}
+
+tr {
+    border-bottom: 1px solid #ccc;
+}
+
+th {
+    text-align: left;    
 }

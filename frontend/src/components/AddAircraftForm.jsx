@@ -1,44 +1,55 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { axiosPost } from "../utils/axiosPost";
+import { UserContext } from "../UserContext";
+
 
 
 export default function AddAircraftForm() {
-    const [error, setError] = useState('')
+    const [feedback, setFeedback] = useState('')
+    const { userContextData, setUserContextData } = useContext(UserContext);
 
-    const [registerForm, setRegisterForm] = useState({
+    const [addAircraftForm, setAddAircraftForm] = useState({
         type: '',
         registration: '',
-        seats: ''
+        numberOfSeats: 0
     })
 
     const handleChange = (event) => {
         const name = event.target.name;
         const value = event.target.value;
-        setRegisterForm((values) => ({
+
+        setAddAircraftForm((values) => ({
             ...values,
             [name]: value
         }))
-        setError('') //clear error message
+        setFeedback('') //clear error message
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        if (registerForm.email === '' || registerForm.password === '') {
-            setError('You must provide an email and password')
-        } else {
-            const ADD_AIRCRAFT_URL = 'http://localhost:8080/authentication/register' //TODO set add aircraft url server endpoint
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userContextData.accessToken}`,
+            }
+        }
 
-            async function fetchData() {
-                const response = await axiosPost(ADD_AIRCRAFT_URL, registerForm)
+        async function callAPI() {
+
+            try {
+                const response = await axios.post(process.env.REACT_APP_AUTHORITY_URL + process.env.REACT_APP_ADD_AIRCRAFT_URL, addAircraftForm, config)
 
                 if (response.status === 200) {
-                    console.log(response.data);
+                    setFeedback('Aircraft added succesfully')
                 }
+
+            } catch (error) {
+                setFeedback(error.response.data.error)
             }
-            fetchData();
+
+
         }
+        callAPI();
     }
 
 
@@ -46,18 +57,18 @@ export default function AddAircraftForm() {
         <div className="add-aircraft">
             <form className="add-aircraft-form">
                 <label htmlFor="type">Model name:</label>
-                <input type="text" name="type" id="type" className="add-aircraft-input-text" onChange={handleChange} value={registerForm.type} />
+                <input type="text" name="type" id="type" className="add-aircraft-input-text" onChange={handleChange} value={addAircraftForm.type} />
 
                 <label htmlFor="registration">Registration:</label>
-                <input type="text" name="registration" id="registration" className="add-aircraft-input-text" onChange={handleChange} value={registerForm.registration} />
+                <input type="text" name="registration" id="registration" className="add-aircraft-input-text" onChange={handleChange} value={addAircraftForm.registration} />
 
-                <label htmlFor="seats">Number of seats:</label>
-                <input type="text" name="seats" id="seats" className="add-aircraft-input-text" onChange={handleChange} value={registerForm.seats} />
+                <label htmlFor="numberOfSeats">Number of seats:</label>
+                <input type="number" name="numberOfSeats" id="numberOfSeats" className="add-aircraft-input-text" onChange={handleChange} value={addAircraftForm.numberOfSeats} />
 
-                <input value="Register" type="submit" name="register" id="register" className="register-button" onClick={handleSubmit} />
+                <input value="Submit" type="submit" name="register" id="register" className="register-button" onClick={handleSubmit} />
             </form>
             <div className="error-feedback">
-                <b>{error}</b>
+                <b>{feedback}</b>
             </div>
         </div>
     )

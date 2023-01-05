@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react"
 import { UserContext } from "../UserContext";
-import { axiosPost } from "../utils/axiosPost"
+import axios from "axios";
+
 
 function Register() {
     // const { userContextData, setUserContextData } = useContext(UserContext)
@@ -38,7 +39,7 @@ function Register() {
                 //     console.log(response.data); //DEBUG purposes
                 // }
                 try {
-                    const response = await axiosPost(REGISTER_URL, registerForm)
+                    const response = await axios.post(REGISTER_URL, registerForm)
                     console.log(response.data);
                 } catch (error) {
                     setError(error.response.data.message) //how to get body from axios error (really?)
