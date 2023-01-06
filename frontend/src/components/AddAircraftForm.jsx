@@ -1,10 +1,11 @@
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
+import Aircraft from "./Aircraft";
 import { UserContext } from "../UserContext";
 
 
 
-export default function AddAircraftForm() {
+export default function AddAircraftForm({ setAircraft }) {
     const [feedback, setFeedback] = useState('')
     const { userContextData, setUserContextData } = useContext(UserContext);
 
@@ -35,11 +36,11 @@ export default function AddAircraftForm() {
         }
 
         async function callAPI() {
-
             try {
                 const response = await axios.post(process.env.REACT_APP_AUTHORITY_URL + process.env.REACT_APP_ADD_AIRCRAFT_URL, addAircraftForm, config)
 
                 if (response.status === 200) {
+                    setAircraft(response.data)
                     setFeedback('Aircraft added succesfully')
                 }
 
@@ -70,6 +71,7 @@ export default function AddAircraftForm() {
             <div className="error-feedback">
                 <b>{feedback}</b>
             </div>
+            {/* <Aircraft /> */}
         </div>
     )
 }

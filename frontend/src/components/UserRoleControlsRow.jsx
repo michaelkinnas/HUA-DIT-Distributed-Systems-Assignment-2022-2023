@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react"
 import { UserContext } from "../UserContext";
 import axios from 'axios';
 
-function UserRoleControlsRow({ user, updateUser }) {
+function UserRoleControlsRow({ user, setUsers }) {
     const { userContextData, setUserContextData } = useContext(UserContext)
     const [selectedRole, setSelectedRole] = useState("0")
 
@@ -19,7 +19,7 @@ function UserRoleControlsRow({ user, updateUser }) {
 
                 try {
                     const response = await axios.post(`${process.env.REACT_APP_AUTHORITY_URL}${process.env.REACT_APP_ADD_ROLE_URL}${user.id}`, { "id": selectedRole }, config)
-                    updateUser(response.data)
+                    setUsers(response.data)
                 } catch (error) {
                     console.log(error.response.data.message)
                 }
@@ -41,7 +41,7 @@ function UserRoleControlsRow({ user, updateUser }) {
 
                 try {
                     const response = await axios.post(`${process.env.REACT_APP_AUTHORITY_URL}${process.env.REACT_APP_REMOVE_ROLE_URL}${user.id}`, { "id": selectedRole }, config)
-                    updateUser(response.data)
+                    setUsers(response.data)
                 } catch (error) {
                     console.log(error.response.data.message)
                 }
@@ -49,9 +49,6 @@ function UserRoleControlsRow({ user, updateUser }) {
             callAPI()
         }
     }
-
-
-
 
     return (
         <tr key={user.id}>
@@ -71,7 +68,6 @@ function UserRoleControlsRow({ user, updateUser }) {
                 <input type="button" value="Add" onClick={handleAddRole} />
                 <input type="button" value="Remove" onClick={handleRemoveRole} />
             </td>
-
         </tr>
     )
 }

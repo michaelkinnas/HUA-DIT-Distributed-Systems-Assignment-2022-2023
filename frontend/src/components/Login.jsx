@@ -1,7 +1,10 @@
 import React, { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../UserContext";
+import { Link } from "react-router-dom";
 import axios from 'axios';
+import logo from '../graphics/logo.png'
+import './login.css'
 
 
 function Login() {
@@ -52,22 +55,6 @@ function Login() {
                 } catch (error) {
                     setError(error.response.data.message) //how to get body from axios error (really?)
                 }
-
-
-                // if (response.status === 200) {
-                //     console.log(response.data);
-
-                //     const userData = {
-                //         email: response.data.email,
-                //         firstname: response.data.firstname,
-                //         lastname: response.data.lastname,
-                //         accessToken: response.data.accessToken,
-                //         tokenType: response.data.tokenType,
-                //         roles: response.data.roles
-                //     }
-                //     setUserContextData(userData)
-                //     navigate("/home") //TEMP SOLUTION
-                // }
             }
             fetchData();
 
@@ -77,18 +64,17 @@ function Login() {
 
     return (
         <div className="login-component">
-
-
+            <img src={logo}></img>
+            <h1 className="main-title">Air Tours</h1>
+            <h4>Enjoy Greece from above!</h4>
             <form className="login-form">
-                <label htmlFor="email">e-mail:</label>
-                <input type="text" name="email" id="email" className="login-input-text" onChange={handleChange} value={loginForm.email} />
-
-                <label htmlFor="password">Password:</label>
-                <input type="text" name="password" id="password" className="login-input-text" onChange={handleChange} value={loginForm.password} />
-
+                <input type="text" name="email" id="email" placeholder="e-mail" className="login-input-text" onChange={handleChange} value={loginForm.email} />
+                <input type="password" name="password" id="password" placeholder="password" className="login-input-text" onChange={handleChange} value={loginForm.password} />
                 <input value="Login" type="submit" name="login" id="login" className="login-button" onClick={handleSubmit} />
             </form>
-            <div className="login-error-feedback">
+            <hr width="330px" />
+            <p className="register-paragraph">Not a member? <Link to="/register">Register</Link> now!</p>
+            <div className="login-errors">
                 <b>{error}</b>
             </div>
         </div>
