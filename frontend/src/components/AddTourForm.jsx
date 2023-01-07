@@ -3,7 +3,7 @@ import axios from "axios";
 import { UserContext } from "../UserContext";
 
 
-export default function AddTourForm() {
+export default function AddTourForm({ setTourLocations }) {
     const [feedback, setFeedback] = useState('')
     const { userContextData, setUserContextData } = useContext(UserContext);
 
@@ -40,7 +40,7 @@ export default function AddTourForm() {
                 const response = await axios.post(process.env.REACT_APP_AUTHORITY_URL + process.env.REACT_APP_ADD_TOUR_URL, addTourForm, config)
 
                 if (response.status === 200) {
-                    setFeedback('Tour added succesfully')
+                    setTourLocations(response.data)
                 }
             } catch (error) {
                 setFeedback(error.response.data.error)

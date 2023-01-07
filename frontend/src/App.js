@@ -10,6 +10,7 @@ import Navbar from "./components/Navbar";
 import AdminRoute from "./protectedRoutes/adminRoute";
 import AdminPanel from "./components/AdminPanel";
 import NoAdminRightsPage from "./components/NoAdminRightsPage";
+import PilotFunctions from "./components/PilotFunctions";
 
 function App() {
   const [userContextData, setUserContextData] = useState({})
@@ -28,6 +29,7 @@ function App() {
           <Route path="/home" element={<LogedUserRoute><Home /></LogedUserRoute>} />
 
           <Route path="/admin" element={<AdminRoute><AdminPanel /></AdminRoute>} />
+          <Route path="/pilot" element={<PilotFunctions />} />
 
         </Routes>
       </UserContext.Provider >

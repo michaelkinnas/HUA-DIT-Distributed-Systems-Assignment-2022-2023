@@ -41,6 +41,7 @@ function Login() {
                     const response = await axios.post(process.env.REACT_APP_AUTHORITY_URL + process.env.REACT_APP_LOGIN_URL, loginForm);
 
                     const userData = {
+                        id: response.data.id,
                         email: response.data.email,
                         firstname: response.data.firstname,
                         lastname: response.data.lastname,

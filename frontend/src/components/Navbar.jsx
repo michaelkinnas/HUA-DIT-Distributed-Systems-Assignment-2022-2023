@@ -15,7 +15,8 @@ export default function Navbar() {
             <Link to="/home">Home</Link>
             <div>
                 {!userContextData.accessToken && <Link to="/register">Register</Link>}
-                <Link to="/admin">Admin</Link>
+                {userContextData.roles.includes("ROLE_ADMIN") && <Link to="/admin">Admin</Link>}
+                {userContextData.roles.includes("ROLE_PILOT") && <Link to="/pilot">Pilot</Link>}
             </div>
             <div className="user-name">
                 {userContextData.firstname} {userContextData.lastname} {userContextData.accessToken ? <Link to="/" onClick={logout}>Logout</Link> : <Link to="/" >Login</Link>}

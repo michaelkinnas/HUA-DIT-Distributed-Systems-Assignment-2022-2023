@@ -1,12 +1,12 @@
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import AircraftRow from "./AircraftRow";
-import AddAircraftForm from "./AddAircraftForm";
+import TourLocationRow from "./TourLocationRow"
+import AddTourForm from "./AddTourForm";
 import { UserContext } from "../UserContext";
 
-function Aircraft() {
+function TourLocations() {
     const { userContextData, setUserContextData } = useContext(UserContext)
-    const [aircraft, setAircraft] = useState([])
+    const [tourLocations, setTourLocations] = useState([])
 
 
     useEffect(() => {
@@ -16,8 +16,8 @@ function Aircraft() {
 
         async function callAPI() {
             try {
-                const response = await axios.get(process.env.REACT_APP_AUTHORITY_URL + process.env.REACT_APP_GET_AIRCRAFTS_URL, config)
-                setAircraft(response.data)
+                const response = await axios.get(process.env.REACT_APP_AUTHORITY_URL + process.env.REACT_APP_GET_TOURS_URL, config)
+                setTourLocations(response.data)
 
             } catch (error) {
                 console.log(error.response.data.message)
@@ -29,17 +29,17 @@ function Aircraft() {
 
     return (
         <div>
-            <AddAircraftForm setAircraft={setAircraft} />
+            <AddTourForm setTourLocations={setTourLocations} />
             <table>
                 <tbody>
                     <tr>
-                        <th>Type</th>
-                        <th>Registration</th>
-                        <th>Number of seats</th>
+                        <th>Tour name</th>
+                        <th>Location</th>
+                        <th>Duration</th>
                         <th>Option</th>
                     </tr>
-                    {aircraft.map((aircraft) => (
-                        <AircraftRow key={aircraft.id} aircraft={aircraft} setAircraft={setAircraft} />
+                    {tourLocations.map((tour) => (
+                        <TourLocationRow key={tour.id} tour={tour} setTourLocations={setTourLocations} />
                     ))}
                 </tbody>
             </table>
@@ -48,4 +48,4 @@ function Aircraft() {
     )
 }
 
-export default Aircraft
+export default TourLocations
