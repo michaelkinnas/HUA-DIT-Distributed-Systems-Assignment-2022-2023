@@ -7,15 +7,15 @@ export default function OpenFlights({ flight }) {
 
     return (
         <tr className="data-row">
-            <th>{flight.name}</th>
-            <th>{flight.tour.location}</th>
-            <th>{flight.tour.duration} hours</th>
-            <th>{flight.aircraft.type}</th>
-            <th>{flight.pilot.firstname} {flight.pilot.lastname}</th>
-            <th>{flight.users.map((user) => (
+            <td>{flight.name}</td>
+            <td>{flight.tour.location}</td>
+            <td>{flight.tour.duration} hours</td>
+            <td>{flight.aircraft.type}</td>
+            <td>{flight.pilot.firstname} {flight.pilot.lastname}</td>
+            <td>{flight.users.map((user) => (
                 <p key={user.id}>{user.firstname} {user.lastname}</p>
-            ))}</th>
-            <th><button type="button" >Take a seat!</button></th>
+            ))}</td>
+            <td><button type="button" >Take a seat!</button></td>
         </tr>
     )
 }

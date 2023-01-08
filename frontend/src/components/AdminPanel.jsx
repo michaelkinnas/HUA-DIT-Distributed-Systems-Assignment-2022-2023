@@ -30,7 +30,7 @@ export default function AdminPanel() {
                 <h3>Admin functions</h3>
                 <div className="button-row">
                     <button className="admin-button" type="button" id="1" onClick={handleSelection}>User Roles</button>
-                    <button className="admin-button-center" type="button" id="2" onClick={handleSelection}>Tour Locations</button>
+                    <button className="admin-button" type="button" id="2" onClick={handleSelection}>Tour Locations</button>
                     <button className="admin-button" type="button" id="3" onClick={handleSelection}>Aircraft</button>
                 </div>
                 <div className="admin-function-page">

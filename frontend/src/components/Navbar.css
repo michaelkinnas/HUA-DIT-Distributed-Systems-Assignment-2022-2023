@@ -12,7 +12,7 @@
 
 .center-items {
     display: flex;    
-    justify-content: space-between;    
+    justify-content: center;
     width: 200px;
 }
 
@@ -21,8 +21,7 @@
     color:#b5b5b5
 
 }
-.logout-link:hover {
-    
+.logout-link:hover {    
     color:#ffbb00
 }
 
@@ -51,20 +50,6 @@
    
     width: 100px;
 }
-
-
-
-/* <!-- HTML !-->
-<button class="button-7" role="button">Button 7</button> */
-
-
-
-
-
-
-
-
-
 
 
 

@@ -17,9 +17,8 @@ export default function Navbar() {
                 <Link to="/home"><img src={logo} className="logo-png" /></Link>
             </div>
             <div className="center-items">
-                {/* {!userContextData.accessToken && <Link to="/register" style={{ textDecoration: 'none' }}>Register</Link>} */}
-                {userContextData.roles.includes("ROLE_ADMIN") && <Link to="/admin" className="navbar-button">Admin</Link>}
-                {userContextData.roles.includes("ROLE_PILOT") && <Link to="/pilot" className="navbar-button">Pilot</Link>}
+                {(userContextData.roles && userContextData.roles.includes("ROLE_ADMIN")) && <Link to="/admin" className="navbar-button">Admin</Link>}
+                {(userContextData.roles && userContextData.roles.includes("ROLE_PILOT")) && <Link to="/pilot" className="navbar-button">Pilot</Link>}
             </div>
             <div className="user-name">
                 {userContextData.firstname} {userContextData.lastname}, {userContextData.accessToken ? <Link to="/" onClick={logout} className="logout-link">Logout</Link> : <Link to="/" >Login</Link>}
