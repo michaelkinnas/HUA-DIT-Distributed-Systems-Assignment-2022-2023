@@ -61,9 +61,9 @@ export default function PilotFunctions() {
                 const config = {
                     headers: { Authorization: `Bearer ${userContextData.accessToken}` }
                 }
-                // console.log(payload)
-                const tourResponse = await axios.post(`${process.env.REACT_APP_AUTHORITY_URL}${process.env.REACT_APP_PILOT_CREATE_TOUR_URL}${userContextData.id}`, payload, config)
-                // setTourSelectionData(response.data)
+
+                const response = await axios.post(`${process.env.REACT_APP_AUTHORITY_URL}${process.env.REACT_APP_PILOT_CREATE_TOUR_URL}${userContextData.id}`, payload, config)
+
 
             } catch (error) {
                 console.log(error.response.data.message)
@@ -73,31 +73,32 @@ export default function PilotFunctions() {
     }
 
     return (
-        <div className="admin-panel">
+        <div className="pilot-page">
             <Navbar />
-            <h4>Create a flight</h4>
-            <form>
-                <label htmlFor="tours">Tour</label>
-                <select name="tours" id="tours" value={selectedTour} onChange={(e) => setSelectedTour(e.target.value)}>
-                    {pilotSelectionForm.tours.map((tour) => (
-                        <option key={tour.id} value={tour.id}>{tour.name}</option>
-                    ))}
-                </select>
+            <div className="pilot-panel">
+                <h4>Create a flight</h4>
+                <form>
+                    <label htmlFor="tours">Tour</label>
+                    <select name="tours" id="tours" value={selectedTour} onChange={(e) => setSelectedTour(e.target.value)}>
+                        {pilotSelectionForm.tours.map((tour) => (
+                            <option key={tour.id} value={tour.id}>{tour.name}</option>
+                        ))}
+                    </select>
 
-                <label htmlFor="aircraft">Aircraft</label>
-                <select name="aircraft" id="aircraft" value={selectedAircraft} onChange={(e) => setSelectedAircraft(e.target.value)}>
-                    {pilotSelectionForm.aircraft.map((aircraft) => (
-                        <option key={aircraft.id} value={aircraft.id}>{aircraft.registration} - {aircraft.type}</option>
-                    ))}
-                </select>
-                <label htmlFor="flightname">Name</label>
-                <input type="text" name="flightName" id="flightName" value={flightName} onChange={(e) => setFlightName(e.target.value)} />
-                <input type="button" value="Create Flight" onClick={handleCreateFlight} />
-
-
-            </form>
+                    <label htmlFor="aircraft">Aircraft</label>
+                    <select name="aircraft" id="aircraft" value={selectedAircraft} onChange={(e) => setSelectedAircraft(e.target.value)}>
+                        {pilotSelectionForm.aircraft.map((aircraft) => (
+                            <option key={aircraft.id} value={aircraft.id}>{aircraft.registration} - {aircraft.type}</option>
+                        ))}
+                    </select>
+                    <label htmlFor="flightname">Name</label>
+                    <input type="text" name="flightName" id="flightName" value={flightName} onChange={(e) => setFlightName(e.target.value)} />
+                    <input type="button" value="Create Flight" onClick={handleCreateFlight} />
 
 
+                </form>
+
+            </div>
         </div>
     )
 }

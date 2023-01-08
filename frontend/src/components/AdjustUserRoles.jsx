@@ -33,8 +33,7 @@ function AdjustUserRoles() {
             <table>
                 <tbody>
                     <tr>
-                        <th>First name</th>
-                        <th>Last name</th>
+                        <th>Name</th>
                         <th>Email</th>
                         <th>User</th>
                         <th>Pilot</th>

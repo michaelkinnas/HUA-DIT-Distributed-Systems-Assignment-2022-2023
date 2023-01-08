@@ -52,8 +52,7 @@ function UserRoleControlsRow({ user, setUsers }) {
 
     return (
         <tr key={user.id}>
-            <td>{user.firstname}</td>
-            <td>{user.lastname}</td>
+            <td>{user.firstname} {user.lastname}</td>
             <td>{user.email}</td>
             <td>{user.roles.some(e => e.id === 3) ? <p>YES</p> : <p>NO</p>}</td>
             <td>{user.roles.some(e => e.id === 2) ? <p>YES</p> : <p>NO</p>}</td>
