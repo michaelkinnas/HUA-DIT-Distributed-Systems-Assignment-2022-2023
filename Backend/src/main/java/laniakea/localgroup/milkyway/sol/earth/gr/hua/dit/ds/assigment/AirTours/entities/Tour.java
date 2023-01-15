@@ -1,12 +1,9 @@
 package laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.List;
+
 
 @Entity
 @Table(name="tour")
@@ -19,18 +16,20 @@ public class Tour {
     private int id;
 
     @Column(name="name")
-    @Size(max = 30)
+    @Size(max = 100)
     private String name;
 
     @Column(name="location")
-    @Size(max = 50)
+    @Size(max = 100)
     private String location;
 
     @Column(name="duration")
     private float duration;
 
     // define constructors
-    public Tour() {}
+    public Tour() {
+
+    }
 
     public Tour(String name, String location, float duration) {
         this.name = name;
@@ -68,6 +67,8 @@ public class Tour {
     public void setDuration(float duration) {
         this.duration = duration;
     }
+
+
 
     // print fields
     public String toString() {

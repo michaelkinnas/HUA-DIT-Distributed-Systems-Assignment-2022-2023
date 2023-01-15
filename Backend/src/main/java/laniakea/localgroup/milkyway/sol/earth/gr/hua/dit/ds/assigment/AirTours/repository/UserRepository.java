@@ -8,5 +8,11 @@ import org.springframework.stereotype.Repository;
 // It builds automatically methods like findAll, findById, deleteById, save etc.
 @Repository
 public interface UserRepository extends JpaRepository <User, Integer> {
-    User findById(int id);
+    User findById(Long id);
+
+    User findByEmail(String email);
+
+    Boolean existsByEmail(String email);
+
+
 }

@@ -1,14 +1,14 @@
 package laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
+
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="users")
@@ -18,7 +18,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="user_id")
-    private int id;
+    private Long id;
 
     @Column(name="first_name")
     @NotBlank(message="Please enter the first name")
@@ -30,35 +30,42 @@ public class User {
     @Size(max =30, message= "Name should not be greater than 30 characters")
     private String lastName;
 
-    @Column(name="email", unique = true)
+    @Column(unique = true)
     @Email(message = "Please enter a valid email")  // It checks the email format, to be valid.
     @Size(max = 50)
     private String email;
 
-    @Column(name="username", unique = true)
-    @Size(max = 30)
-    private String username;
-
     @Column(name="password")
     private String password;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Set<Role> roles = new HashSet<>();
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
 
     // define constructors
     public User() {}
 
-    public User(String firstName, String lastName, String email, String username, String password) {
+    public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.username = username;
         this.password = password;
     }
 
     // define getters-setters
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -86,17 +93,17 @@ public class User {
         this.email = email;
     }
 
-    public String getUsername() {
-        return username;
+    public String getPassword() {
+        return password;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void  setPassword() {
+        this.password = password;
     }
 
     // print fields
     public String toString() {
-        return "User [id= " + id + ", firstName= " + firstName + ", " +
-                "lastName= " + lastName + ", email= " + email + "] - username= " + username;
+        return "User [id= " + id + ", firstName= " + firstName + ",lastName= " + lastName + "," +
+                " email= " + email + "]";
     }
 }
