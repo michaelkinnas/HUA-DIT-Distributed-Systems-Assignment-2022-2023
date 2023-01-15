@@ -1,7 +1,7 @@
 package laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.controllers;
 
 import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.config.JwtUtils;
-import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.entities.EnRole;
+import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.entities.ERole;
 import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.entities.Role;
 import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.entities.User;
 import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.payload.request.LoginRequest;
@@ -28,8 +28,9 @@ import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/authentication")
 public class AuthController {
+
     @Autowired
     AuthenticationManager authenticationManager;
 
@@ -47,13 +48,10 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-
+                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
-
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
@@ -61,19 +59,17 @@ public class AuthController {
 
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
-                userDetails.getUsername(),
                 userDetails.getEmail(),
-                userDetails.getFirstName(),
-                userDetails.getLastName(),
                 roles));
+
     }
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Error: Username is already taken!"));
+                    .body(new MessageResponse("Error: An error has occured!"));
         }
 
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
@@ -82,36 +78,34 @@ public class AuthController {
                     .body(new MessageResponse("Error: Email is already in use!"));
         }
 
-        // Create new user's account
-        User user = new User(signUpRequest.getUsername(),
-                signUpRequest.getFirstName(),
-                signUpRequest.getLastName(),
+        User user = new User(signUpRequest.getFirstName(),signUpRequest.getLastName(),
                 signUpRequest.getEmail(),
-                signUpRequest.getEnabled(),
                 encoder.encode(signUpRequest.getPassword()));
 
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {
-            Role userRole = roleRepository.findByName(EnRole.ROLE_USER)
+            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
             roles.add(userRole);
         } else {
             strRoles.forEach(role -> {
                 switch (role) {
                     case "admin":
-                        Role adminRole = roleRepository.findByName(EnRole.ROLE_ADMIN)
+                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(adminRole);
+
                         break;
                     case "pilot":
-                        Role pilotRole = roleRepository.findByName(EnRole.ROLE_PILOT)
+                        Role modRole = roleRepository.findByName(ERole.ROLE_PILOT)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(pilotRole);
+                        roles.add(modRole);
+
                         break;
                     default:
-                        Role userRole = roleRepository.findByName(EnRole.ROLE_USER)
+                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(userRole);
                 }
@@ -124,4 +118,7 @@ public class AuthController {
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 
+
 }
+
+

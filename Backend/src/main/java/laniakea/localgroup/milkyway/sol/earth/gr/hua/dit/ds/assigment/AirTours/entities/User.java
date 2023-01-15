@@ -1,6 +1,6 @@
 package laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.entities;
 
-import org.springframework.data.annotation.PersistenceConstructor;
+
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -18,12 +18,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="user_id")
-    private int id;
-
-
-    @Column(name="username", unique = true)
-    @Size(max = 30)
-    private String username;
+    private Long id;
 
     @Column(name="first_name")
     @NotBlank(message="Please enter the first name")
@@ -35,49 +30,42 @@ public class User {
     @Size(max =30, message= "Name should not be greater than 30 characters")
     private String lastName;
 
-    @Column(name="email", unique = true)
+    @Column(unique = true)
     @Email(message = "Please enter a valid email")  // It checks the email format, to be valid.
     @Size(max = 50)
     private String email;
 
-    @NotBlank
-    @Size(max = 120)
     @Column(name="password")
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_roles",
-                joinColumns = @JoinColumn(name = "user_id"),
-                inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.MERGE, CascadeType.PERSIST})
-    private List<ActiveTour> activetours;
+    public Set<Role> getRoles() {
+        return roles;
+    }
 
-    @Column(name = "enabled")
-    private boolean enabled;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 
+
+    // define constructors
     public User() {}
 
-    public User(String username, String firstName, String lastName, String email, boolean enabled, String encode) {
-        this.username = username;
+    public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.enabled = enabled;
-        this.password = encode;
-
+        this.password = password;
     }
 
-    // define constructors
-
-
     // define getters-setters
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -105,37 +93,17 @@ public class User {
         this.email = email;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public List<ActiveTour> getActiveTours() {
-        return activetours;
-    }
-
-    public void setActivetours(List<ActiveTour> activetours) {
-        this.activetours = activetours;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
     public String getPassword() {
         return password;
     }
 
+    public void  setPassword() {
+        this.password = password;
+    }
+
     // print fields
     public String toString() {
-        return "User [id= " + id + ", firstName= " + firstName + ", " +
-                "lastName= " + lastName + ", email= " + email + "] - username= " + username;
+        return "User [id= " + id + ", firstName= " + firstName + ",lastName= " + lastName + "," +
+                " email= " + email + "]";
     }
 }

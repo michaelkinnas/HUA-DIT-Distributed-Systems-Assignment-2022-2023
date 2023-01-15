@@ -12,12 +12,11 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class UserDetailsImpl implements UserDetails {
+    private static final long serialVersionUID = 1L;
 
-    private int id;
+    private Long id;
 
-    private String username;
-
-    private String firstName;
+    private  String firstName;
 
     private String lastName;
 
@@ -28,13 +27,12 @@ public class UserDetailsImpl implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(int id, String username, String email, String firstName, String lastName, String password,
+    public UserDetailsImpl(Long id, String firstName, String lastName, String email, String password,
                            Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
-        this.username = username;
-        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
         this.password = password;
         this.authorities = authorities;
     }
@@ -46,10 +44,9 @@ public class UserDetailsImpl implements UserDetails {
 
         return new UserDetailsImpl(
                 user.getId(),
-                user.getUsername(),
-                user.getEmail(),
                 user.getFirstName(),
                 user.getLastName(),
+                user.getEmail(),
                 user.getPassword(),
                 authorities);
     }
@@ -59,7 +56,7 @@ public class UserDetailsImpl implements UserDetails {
         return authorities;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -68,11 +65,11 @@ public class UserDetailsImpl implements UserDetails {
     }
 
     public String getFirstName() {
-        return firstName;
+        return email;
     }
 
     public String getLastName() {
-        return lastName;
+        return email;
     }
 
     @Override
@@ -82,7 +79,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return null;
     }
 
     @Override

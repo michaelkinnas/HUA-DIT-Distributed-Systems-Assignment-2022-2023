@@ -7,15 +7,6 @@ import java.util.Set;
 
 public class SignupRequest {
     @NotBlank
-    @Size(min = 3, max = 20)
-    private String username;
-
-    @NotBlank
-    @Size(max = 50)
-    @Email
-    private String email;
-
-    @NotBlank
     @Size(max = 50)
     private String firstName;
 
@@ -23,35 +14,22 @@ public class SignupRequest {
     @Size(max = 50)
     private String lastName;
 
+    @NotBlank
+    @Size(max = 50)
+    @Email
+    private String email;
+
     private Set<String> role;
 
     @NotBlank
-    @Size(max=120)
+    @Size(min = 6, max = 40)
     private String password;
-
-    private boolean enabled;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public void setUsername(String firstName) {
         this.firstName = firstName;
     }
 
@@ -61,6 +39,14 @@ public class SignupRequest {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -77,9 +63,5 @@ public class SignupRequest {
 
     public void setRole(Set<String> role) {
         this.role = role;
-    }
-
-    public boolean getEnabled() {
-        return enabled;
     }
 }
