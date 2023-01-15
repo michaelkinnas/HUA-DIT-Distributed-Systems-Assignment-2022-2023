@@ -1,6 +1,10 @@
 package laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.controllers;
 
+import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.entities.Flight;
+import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.entities.Tour;
 import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.entities.User;
+import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.repository.FlightRepository;
+import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.repository.TourRepository;
 import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -9,43 +13,46 @@ import java.util.List;
 
 // RestController manages JSONs
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/home")
 public class UserController {
 
     @Autowired
     UserRepository userRepository;
 
-    @GetMapping("")
-    List<User> getAll() {
-        return userRepository.findAll();
+    @Autowired
+    TourRepository tourRepository;
+
+    @Autowired
+    FlightRepository flightRepository;
+
+    //RETURN ALL TOURS
+    @GetMapping("tours")
+    public List<Tour> getAll() {
+        return tourRepository.findAll();
     }
 
-    @GetMapping("/{id}")
-    User get(@PathVariable int id) {
-        return userRepository.findById(id);
+    //USER REGISTER TOUR SEAT
+    @PostMapping("flight-register/{flightId}")
+    public List<Flight> registerFlight(@PathVariable Long id, @RequestBody User user) {
+        Long userId = user.getId();//get id from user json
+        int flightId = flightRepository.findFlightById(id).getId();//get flight id from path v.
+        User searchUser = userRepository.findById(userId);//find by id from user table
+        Flight searchFlight = flightRepository.findFlightById((long) flightId);//find by id flight table
+        searchFlight.passengers.add(searchUser);//flight1.passenger.add(user1)
+        flightRepository.save(searchFlight);//rep.saveflight(flight1)
+        return flightRepository.findAll();
     }
 
-    @PostMapping("")
-    User save(@RequestBody User user) {
-        user.setId(0);
-        userRepository.save(user);
-        return user;
+    @PostMapping("flight-unregister/{flightId}")
+    public List<Flight> unregisterFlight(@PathVariable Long id, @RequestBody User user) {
+        Long userId = user.getId();//get id from user json
+        int flightId = flightRepository.findFlightById(id).getId();//get flight id from path v.
+        User searchUser = userRepository.findById(userId);//find by id from user table
+        Flight searchFlight = flightRepository.findFlightById((long) flightId);//find by id flight table
+        searchFlight.passengers.remove(searchUser);
+        flightRepository.save(searchFlight);
+        return flightRepository.findAll();
     }
 
-    @PutMapping("/{id}")
-    User updateUser(@PathVariable int id, @RequestBody User user) {
-        User existingUser = userRepository.findById(id);
-        existingUser.setFirstName(user.getFirstName());
-        existingUser.setLastName(user.getLastName());
-        existingUser.setEmail(user.getEmail());
-        existingUser.setUsername(user.getUsername());
-        userRepository.save(existingUser);
-        return existingUser;
-    }
-
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id) {
-        userRepository.deleteById(id);
-    }
 
 }

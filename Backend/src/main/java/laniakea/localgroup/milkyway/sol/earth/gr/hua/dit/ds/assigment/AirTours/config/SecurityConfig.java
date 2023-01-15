@@ -14,11 +14,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import javax.sql.DataSource;
+
 
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true)  // To set security in method level
-@EnableWebSecurity          // To set some rules
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableWebSecurity
 public class SecurityConfig {
+
+
 
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
@@ -28,9 +32,11 @@ public class SecurityConfig {
         return new AuthTokenFilter();
     }
 
+
     @Bean
     public AuthenticationManager authenticationManagerBean (AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
+
     }
 
     @Bean
@@ -40,16 +46,17 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .cors().and().csrf().disable()
+        http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().antMatchers("/api/auth/**").permitAll()
-                .antMatchers("/api/test/**").permitAll()
+                .authorizeRequests()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/home/**").hasRole("USER")
+                .antMatchers("/pilot/**").hasRole("PILOT")
                 .anyRequest().authenticated();
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-
         return http.build();
     }
+
 }
