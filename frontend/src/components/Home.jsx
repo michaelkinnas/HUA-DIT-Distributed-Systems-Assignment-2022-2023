@@ -1,45 +1,58 @@
-import React, { useContext, useState, useEffect } from "react"
+import { useEffect, useState, useContext } from "react";
+import axios from "axios";
 import { UserContext } from "../UserContext";
-import axios from 'axios';
+import OpenFlightRow from './OpenFlightRow';
 import Navbar from "./Navbar";
-import OpenFlights from "./OpenFlights"
+import './OpenFlights.css'
 
-
-function Home() {
+export default function OpenFlights() {
     const { userContextData, setUserContextData } = useContext(UserContext)
-    const [openFlights, setOpenFlights] = useState([])
+    const [flights, setFlights] = useState([])
 
     useEffect(() => {
-        // const response = axios.get(process.env.AUTHORITY_URL + process.env.ACTIVE_TOURS_URL)
-
         const config = {
             headers: { Authorization: `Bearer ${userContextData.accessToken}` }
         }
 
-        async function callAPI() {
+        async function callApi() {
             try {
-                const response = await axios.get(process.env.REACT_APP_AUTHORITY_URL + process.env.REACT_APP_ACTIVE_TOURS_URL, config)
-                setOpenFlights(response.data)
-                // console.log(response.data)
+                const response = await axios.get(`${process.env.REACT_APP_AUTHORITY_URL}${process.env.REACT_APP_ACTIVE_FLIGHTS}`, config)
 
+                setFlights(response.data)
+                console.log(response.data)
+                console.log(flights)
             } catch (error) {
-                console.log(error.response.data.message) //how to get body from axios error (really?)
+                console.log(error.response.data.message)
             }
         }
-        callAPI()
+        callApi()
     }, [])
 
 
-
-
     return (
-
-        <div>
+        <div className="home-page-container">
             <Navbar />
-            {openFlights ? <OpenFlights data={openFlights} /> : <h3>Loading...</h3>}
-        </div >
+            <div className="open-flights-container">
+                <h2>Take a seat and fly!</h2>
+
+                <table className="open-flights-table">
+                    <tbody>
+                        <tr>
+                            <th>Name</th>
+                            <th>Location</th>
+                            <th>Duration</th>
+                            <th>Aircraft</th>
+                            <th>Pilot</th>
+                            <th>Seats</th>
+                            <th>Options</th>
+                        </tr>
+
+                        {flights.map((flight) => (
+                            <OpenFlightRow key={flight.id} flight={flight} />
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     )
 }
-
-
-export default Home;

@@ -1,8 +1,35 @@
-import { useEffect, useState } from "react";
-import FlightCard from './FlightCard';
+import { useEffect, useState, useContext } from "react";
+import axios from "axios";
+import { UserContext } from "../UserContext";
+import OpenFlightRow from './OpenFlightRow';
 import './OpenFlights.css'
 
-export default function OpenFlights(props) {
+export default function OpenFlights() {
+    const { userContextData, setUserContextData } = useContext(UserContext)
+    const [flights, setFlights] = useState([])
+
+
+
+    useEffect(() => {
+        const config = {
+            headers: { Authorization: `Bearer ${userContextData.accessToken}` }
+        }
+
+        async function callApi() {
+            const config = {
+                headers: { Authorization: `Bearer ${userContextData.accessToken}` }
+            }
+
+            try {
+                const response = await axios.get(`${process.env.REACT_APP_AUTHORITY_URL}${process.env.REACT_APP_ACTIVE_FLIGHTS}`, config)
+                setFlights(response.data)
+            } catch (error) {
+                console.log(error.response.data.message)
+            }
+        }
+        callApi()
+    }, [])
+
 
     return (
         <div className="open-flights-container">
@@ -21,8 +48,8 @@ export default function OpenFlights(props) {
                         <th>Options</th>
                     </tr>
 
-                    {props.data.map((flight) => (
-                        <FlightCard key={flight.id} flight={flight} />
+                    {flights.data.map((flight) => (
+                        <OpenFlightRow key={flight.id} flight={flight} />
                     ))}
                 </tbody>
             </table>

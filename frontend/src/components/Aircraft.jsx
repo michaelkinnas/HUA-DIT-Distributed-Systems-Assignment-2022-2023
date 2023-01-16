@@ -18,7 +18,6 @@ function Aircraft() {
             try {
                 const response = await axios.get(process.env.REACT_APP_AUTHORITY_URL + process.env.REACT_APP_GET_AIRCRAFTS_URL, config)
                 setAircraft(response.data)
-
             } catch (error) {
                 console.log(error.response.data.message)
             }
