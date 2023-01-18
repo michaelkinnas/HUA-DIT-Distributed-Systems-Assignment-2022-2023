@@ -8,18 +8,12 @@ export default function OpenFlights() {
     const { userContextData, setUserContextData } = useContext(UserContext)
     const [flights, setFlights] = useState([])
 
-
-
     useEffect(() => {
         const config = {
             headers: { Authorization: `Bearer ${userContextData.accessToken}` }
         }
 
         async function callApi() {
-            const config = {
-                headers: { Authorization: `Bearer ${userContextData.accessToken}` }
-            }
-
             try {
                 const response = await axios.get(`${process.env.REACT_APP_AUTHORITY_URL}${process.env.REACT_APP_ACTIVE_FLIGHTS}`, config)
                 setFlights(response.data)
@@ -37,7 +31,7 @@ export default function OpenFlights() {
             <h2>Take a seat and fly!</h2>
 
             <table className="open-flights-table">
-                <tbody>
+                <thead>
                     <tr>
                         <th>Name</th>
                         <th>Location</th>
@@ -47,7 +41,8 @@ export default function OpenFlights() {
                         <th>Seats</th>
                         <th>Options</th>
                     </tr>
-
+                </thead>
+                <tbody>
                     {flights.data.map((flight) => (
                         <OpenFlightRow key={flight.id} flight={flight} />
                     ))}

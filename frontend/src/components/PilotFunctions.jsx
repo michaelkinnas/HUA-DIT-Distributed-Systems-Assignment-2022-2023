@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import { UserContext } from "../UserContext";
 import axios from "axios";
 import Navbar from "./Navbar";
+import PilotCurrentFlight from "./PilotCurrentFlight";
 
 export default function PilotFunctions() {
     const { userContextData, setUserContextData } = useContext(UserContext)
@@ -12,6 +13,7 @@ export default function PilotFunctions() {
     const [selectedTour, setSelectedTour] = useState('')
     const [selectedAircraft, setSelectedAircraft] = useState('')
     const [flightName, setFlightName] = useState('')
+    const [feedback, setFeedback] = useState('')
 
     useEffect(() => {
         const config = {
@@ -20,28 +22,28 @@ export default function PilotFunctions() {
 
         async function callAPI() {
             try {
-                const tourResponse = await axios.get(process.env.REACT_APP_AUTHORITY_URL + process.env.REACT_APP_GET_TOURS_URL, config)
-                const aircraftResponse = await axios.get(process.env.REACT_APP_AUTHORITY_URL + process.env.REACT_APP_GET_AIRCRAFTS_URL, config)
+                const tourResponse = await axios.get(process.env.REACT_APP_AUTHORITY_URL + process.env.REACT_APP_GET_TOURS_URL_PILOT, config)
+                const aircraftResponse = await axios.get(process.env.REACT_APP_AUTHORITY_URL + process.env.REACT_APP_GET_AIRCRAFT_URL_PILOT, config)
 
                 const data = {
                     tours: tourResponse.data,
                     aircraft: aircraftResponse.data
                 }
 
-                // console.log(data)
                 setPilotSelectionForm(data)
 
-
             } catch (error) {
-                console.log(error.response.data.message)
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                }
             }
         }
         callAPI()
     }, [])
 
     function handleCreateFlight() {
-
-        // console.log(userContextData)
         async function callAPI() {
             try {
                 const payload = {
@@ -56,17 +58,24 @@ export default function PilotFunctions() {
                     aircraft: {
                         id: selectedAircraft
                     }
-
                 }
+
                 const config = {
                     headers: { Authorization: `Bearer ${userContextData.accessToken}` }
                 }
 
-                const response = await axios.post(`${process.env.REACT_APP_AUTHORITY_URL}${process.env.REACT_APP_PILOT_CREATE_TOUR_URL}${userContextData.id}`, payload, config)
+                const response = await axios.post(`${process.env.REACT_APP_AUTHORITY_URL}${process.env.REACT_APP_PILOT_CREATE_FLIGHT_URL}${userContextData.id}`, payload, config)
 
+                if (response.status === 200) {
+                    setFeedback('Flight created sucessfully');
+                }
 
             } catch (error) {
-                console.log(error.response.data.message)
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                }
             }
         }
         callAPI()
@@ -94,10 +103,9 @@ export default function PilotFunctions() {
                     <label htmlFor="flightname">Name</label>
                     <input type="text" name="flightName" id="flightName" value={flightName} onChange={(e) => setFlightName(e.target.value)} />
                     <input type="button" value="Create Flight" onClick={handleCreateFlight} />
-
-
                 </form>
-
+                <PilotCurrentFlight />
+                <h4 className="message_feedback">{feedback}</h4>
             </div>
         </div>
     )

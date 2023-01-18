@@ -17,10 +17,7 @@ export default function OpenFlights() {
         async function callApi() {
             try {
                 const response = await axios.get(`${process.env.REACT_APP_AUTHORITY_URL}${process.env.REACT_APP_ACTIVE_FLIGHTS}`, config)
-
                 setFlights(response.data)
-                console.log(response.data)
-                console.log(flights)
             } catch (error) {
                 console.log(error.response.data.message)
             }
@@ -48,7 +45,7 @@ export default function OpenFlights() {
                         </tr>
 
                         {flights.map((flight) => (
-                            <OpenFlightRow key={flight.id} flight={flight} />
+                            <OpenFlightRow key={flight.id} flight={flight} setFlights={setFlights} />
                         ))}
                     </tbody>
                 </table>
