@@ -1,18 +1,15 @@
 import React, { useContext, useState, useEffect } from "react"
 import { UserContext } from "../UserContext";
 import axios from 'axios';
-import OpenFlights from "./OpenFlights"
 import UserRoleControlsRow from "./UserRoleControlsRow"
+import "./AdjustUserRoles.css"
 
 
 function AdjustUserRoles() {
     const { userContextData, setUserContextData } = useContext(UserContext)
     const [users, setUsers] = useState([])
 
-
     useEffect(() => {
-        // const response = axios.get(process.env.AUTHORITY_URL + process.env.ACTIVE_TOURS_URL)
-
         const config = {
             headers: { Authorization: `Bearer ${userContextData.accessToken}` }
         }
@@ -29,12 +26,11 @@ function AdjustUserRoles() {
     }, [])
 
     return (
-        <div>
-            <table>
+        <div className="admin-userRoles-table-container">
+            <table className="admin-userRoles-table">
                 <tbody>
                     <tr>
-                        <th>First name</th>
-                        <th>Last name</th>
+                        <th>Name</th>
                         <th>Email</th>
                         <th>User</th>
                         <th>Pilot</th>

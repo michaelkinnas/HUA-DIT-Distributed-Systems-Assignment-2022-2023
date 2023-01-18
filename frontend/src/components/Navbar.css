@@ -1,6 +1,98 @@
 .navbar {
-    display: flex;
-    /* flex-direction: row;
-    flex-wrap: nowrap; */
+    display: flex;    
     justify-content: space-between;
+    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(92,160,164,1) 47%, rgba(0,88,255,1) 100%);
+    color: #fff;
+    height: 40px;    
+    align-items: center;
+    stroke: #ffbb00;
+    stroke-width: 2px;
+    height: 50px;
 }
+
+.center-items {
+    display: flex;    
+    justify-content: center;
+    width: 200px;
+}
+
+.logout-link {
+    text-decoration: none;
+    color:#b5b5b5
+
+}
+.logout-link:hover {    
+    color:#ffbb00
+}
+
+
+.left-logo {
+    width: 200px;
+    
+}
+
+.left-logo {
+    margin-left: 20px;
+}
+
+.logo-png {
+    margin-right: 10px;
+    width: 40px;
+}
+
+.user-name {
+    width: 200px;
+    margin-right: 20px;
+    text-align: end;
+}
+
+.navbar-button {
+   
+    width: 100px;
+}
+
+
+
+/* CSS */
+.navbar-button {
+    margin-left: 4px;
+    margin-right: 4px;
+  background-color: #0095ff;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  box-shadow: rgba(255, 255, 255, .4) 0 1px 0 0 inset;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,"Segoe UI","Liberation Sans",sans-serif;
+  font-size: 15px;
+  font-weight: bold;
+  line-height: 1.15385;
+  /* margin: 0; */
+  outline: none;
+  padding: 8px .8em;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+.navbar-button:hover,
+.navbar-button:focus {
+  background-color: #07c;
+}
+
+.navbar-button:focus {
+  box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
+}
+
+.navbar-button:active {
+  background-color: #0064bd;
+  box-shadow: none;
+}
+

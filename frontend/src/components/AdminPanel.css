@@ -1,0 +1,78 @@
+.admin-page {
+    /* background-color: #7aa7c7; */
+    height: 100vh;;
+}
+
+
+.admin-panel {
+    text-align: center;
+    width: 800px;
+    margin: auto;   
+}
+
+.admin-panel, h3 {
+  margin-top: 30px;
+  margin-bottom: 10px;  
+}
+
+
+.button-row {
+    max-width: 800px;
+    display: flex;
+    justify-content: center;
+    padding: 4px;
+    /* background-color:#2c5777;/ */
+}
+
+
+
+.admin-button, .admin-button-center {
+   width: 150px;
+}
+
+.admin-button-center {
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.admin-button {
+  margin-left: 4px;
+  margin-right: 4px;
+  background-color: #0095ff;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  box-shadow: rgba(255, 255, 255, .4) 0 1px 0 0 inset;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,"Segoe UI","Liberation Sans",sans-serif;
+  font-size: 15px;
+    font-weight: bold;
+    line-height: 1.15385;
+    /* margin: 0; */
+    outline: none;
+    padding: 8px .8em;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: baseline;
+    white-space: nowrap;
+}
+
+.admin-button:hover,
+.admin-button:focus {
+background-color: #07c;
+}
+
+.admin-button:focus {
+box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
+}
+
+.admin-button:active {
+background-color: #0064bd;
+box-shadow: none;
+}

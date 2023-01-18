@@ -1,0 +1,33 @@
+.positive, .negative {
+    width: 30px;   
+}
+
+.admin-userRoles-table {
+    margin-top: 20px;
+    text-align: left;
+    width: 100%;
+}
+
+.admin-userRoles-table,  th, td {
+    align-items: center;
+    height: 50px;
+    font-size: medium;    
+    border-collapse: collapse;     
+    color: aliceblue;
+}
+
+th {
+    height: 30px;
+    background-color: rgb(12, 68, 101);
+    color: aliceblue;
+}
+
+tbody tr:nth-child(even){
+    background-color: #797f89;
+   
+  }
+
+  tbody tr:nth-child(odd){
+    background-color: #495364;
+   
+  }

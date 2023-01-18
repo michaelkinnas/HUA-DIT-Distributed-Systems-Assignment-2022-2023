@@ -3,6 +3,7 @@ import TourLocations from "./TourLocations"
 import Aircraft from "./Aircraft";
 import AdjustUserRoles from "./AdjustUserRoles";
 import Navbar from "./Navbar";
+import "./AdminPanel.css"
 
 
 
@@ -23,16 +24,18 @@ export default function AdminPanel() {
     }
 
     return (
-        <div className="admin-panel">
+        <div className="admin-page">
             <Navbar />
-            <h4>Admin functions</h4>
-            <div className="button-row">
-                <button type="button" id="1" onClick={handleSelection}>User Roles</button>
-                <button type="button" id="2" onClick={handleSelection}>Tour Locations</button>
-                <button type="button" id="3" onClick={handleSelection}>Aircraft</button>
-            </div>
-            <div className="admin-function-page">
-                {activeAdminFunctionPage}
+            <div className="admin-panel">
+                <h3>Admin functions</h3>
+                <div className="button-row">
+                    <button className="admin-button" type="button" id="1" onClick={handleSelection}>User Roles</button>
+                    <button className="admin-button" type="button" id="2" onClick={handleSelection}>Tour Locations</button>
+                    <button className="admin-button" type="button" id="3" onClick={handleSelection}>Aircraft</button>
+                </div>
+                <div className="admin-function-page">
+                    {activeAdminFunctionPage}
+                </div>
             </div>
         </div>
     )
