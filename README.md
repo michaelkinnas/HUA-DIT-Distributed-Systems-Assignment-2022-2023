@@ -21,7 +21,7 @@ Password: pass123
 
 
 ## 2. Running the application server.
-Open the directory "DS-Assigment-2022-20223/backend" in an IDE preferably IntelliJ. Wait for dependencies to be installed and then run the server application from the IDE.
+Open the directory "DS-Assigment-2022-2023/backend" in an IDE preferably IntelliJ. Wait for dependencies to be installed and then run the server application from the IDE.
 
 
 ## 3. Running the frontend.
