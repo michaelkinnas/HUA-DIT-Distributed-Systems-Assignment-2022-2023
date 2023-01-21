@@ -3,6 +3,7 @@ import axios from "axios";
 import TourLocationRow from "./TourLocationRow"
 import AddTourForm from "./AddTourForm";
 import { UserContext } from "../UserContext";
+import "./TourLocations.css"
 
 function TourLocations() {
     const { userContextData, setUserContextData } = useContext(UserContext)
@@ -28,21 +29,24 @@ function TourLocations() {
 
 
     return (
-        <div>
-            <AddTourForm setTourLocations={setTourLocations} />
-            <table>
-                <tbody>
+        <div className="tour-locations-table-container">
+
+            <table className="tour-locations-table">
+                <thead>
                     <tr>
                         <th>Tour name</th>
                         <th>Location</th>
                         <th>Duration</th>
                         <th>Option</th>
                     </tr>
+                </thead>
+                <tbody>
                     {tourLocations.map((tour) => (
                         <TourLocationRow key={tour.id} tour={tour} setTourLocations={setTourLocations} />
                     ))}
                 </tbody>
             </table>
+            <AddTourForm setTourLocations={setTourLocations} />
         </div>
 
     )

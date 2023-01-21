@@ -1,27 +1,25 @@
-import { Link, Routes, Route } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Routes, Route } from "react-router-dom";
+import { useState } from "react";
 import { UserContext } from './UserContext'
-import './App.css'
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Home from "./components/Home";
 import LogedUserRoute from "./protectedRoutes/logedUserRoute";
-import Navbar from "./components/Navbar";
 import AdminRoute from "./protectedRoutes/adminRoute";
 import AdminPanel from "./components/AdminPanel";
 import NoAdminRightsPage from "./components/NoAdminRightsPage";
 import PilotFunctions from "./components/PilotFunctions";
+import './App.css'
+// import './App_styles.css'
 
 function App() {
   const [userContextData, setUserContextData] = useState({})
 
   return (
-    <>
+    <div className="app-container">
       <UserContext.Provider value={{ userContextData, setUserContextData }}>
-        {/* <Navbar /> */}
 
         <Routes>
-          {/* <Route path="/" element={<Login toggleUserLogedIn={setIsUserLogedIn} userLogedInStatus={isUserLogedIn} />} /> */}
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/noadminrights" element={<NoAdminRightsPage />} />
@@ -33,7 +31,7 @@ function App() {
 
         </Routes>
       </UserContext.Provider >
-    </>
+    </div>
 
   );
 }

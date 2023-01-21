@@ -26,10 +26,10 @@ function TourLocationRow({ tour, setTourLocations }) {
 
     return (
         <tr>
-            <th>{tour.name}</th>
-            <th>{tour.location}</th>
-            <th>{tour.duration}</th>
-            <th><input type="button" value="Remove" onClick={handleRemove} /></th>
+            <td>{tour.name}</td>
+            <td>{tour.location}</td>
+            <td>{tour.duration}</td>
+            <td><input type="button" value="Remove" onClick={handleRemove} /></td>
         </tr>
     )
 

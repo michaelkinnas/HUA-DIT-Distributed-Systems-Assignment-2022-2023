@@ -3,7 +3,7 @@ import axios from "axios";
 import { UserContext } from "../UserContext";
 import OpenFlightRow from './OpenFlightRow';
 import Navbar from "./Navbar";
-import './OpenFlights.css'
+import './Home.css'
 
 export default function OpenFlights() {
     const { userContextData, setUserContextData } = useContext(UserContext)
@@ -31,9 +31,8 @@ export default function OpenFlights() {
             <Navbar />
             <div className="open-flights-container">
                 <h2>Take a seat and fly!</h2>
-
                 <table className="open-flights-table">
-                    <tbody>
+                    <thead>
                         <tr>
                             <th>Name</th>
                             <th>Location</th>
@@ -43,7 +42,8 @@ export default function OpenFlights() {
                             <th>Seats</th>
                             <th>Options</th>
                         </tr>
-
+                    </thead>
+                    <tbody>
                         {flights.map((flight) => (
                             <OpenFlightRow key={flight.id} flight={flight} setFlights={setFlights} />
                         ))}

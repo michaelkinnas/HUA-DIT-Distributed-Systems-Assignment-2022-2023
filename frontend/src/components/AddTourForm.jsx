@@ -63,7 +63,7 @@ export default function AddTourForm({ setTourLocations }) {
                 <label htmlFor="duration">Duration:</label>
                 <input type="number" min="0" name="duration" id="duration" className="add-aircraft-input-text" onChange={handleChange} value={addTourForm.duration} />
 
-                <input value="Submit" type="submit" name="register" id="register" className="register-button" onClick={handleSubmit} />
+                <input value="Submit" type="submit" name="register" id="register" className="add-tour-button" onClick={handleSubmit} />
             </form>
             <div className="error-feedback">
                 <b>{feedback}</b>

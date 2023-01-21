@@ -1,33 +1,33 @@
 .positive, .negative {
-    width: 30px;   
+    width: 25px;   
 }
 
-.admin-userRoles-table {
-    margin-top: 20px;
-    text-align: left;
+.admin-userRoles-table-container {
+    text-align: center;
+    margin: auto;
+    padding-top: 30px;
+}
+
+.admin-userRoles-table  {   
     width: 100%;
+    border-collapse: collapse; 
+    text-align: center;
+    font-size: medium;     
 }
 
-.admin-userRoles-table,  th, td {
-    align-items: center;
-    height: 50px;
-    font-size: medium;    
-    border-collapse: collapse;     
-    color: aliceblue;
+.admin-userRoles-table thead {
+    background-color: #24aae1;
+    color: white;
 }
 
-th {
-    height: 30px;
-    background-color: rgb(12, 68, 101);
-    color: aliceblue;
+.admin-userRoles-table tbody {
+    height: 40px;
 }
 
-tbody tr:nth-child(even){
-    background-color: #797f89;
-   
-  }
+.admin-userRoles-table tbody tr:nth-child(even){    
+    background-color: #e7ebf1;  
+}
 
-  tbody tr:nth-child(odd){
-    background-color: #495364;
-   
-  }
+.admin-userRoles-table tbody tr:nth-child(odd){
+    background-color: #dedede; 
+}

@@ -1,0 +1,44 @@
+.open-flights-container{
+    text-align: center;
+    margin: auto;
+    width: 70%;
+    padding: 10px;    
+}
+
+.open-flights-table {
+    text-align: left;
+    width: 100%;
+    border-collapse: collapse;    
+}
+
+.open-flights-table thead {
+    height: 30px;
+    background-color: #24aae1;
+    color: white;
+}
+
+.open-flights-table tbody {
+    height: 30px;    
+    color: rgb(0, 0, 0);
+}
+
+.open-flights-table th {
+    text-align: center;    
+    height: 10px;
+    font-size: medium;    
+}
+
+.open-flights-table td {
+    width: 100px;
+    text-align: center;    
+    height: 50px;
+    font-size: medium;    
+}
+
+.open-flights-table tbody tr:nth-child(even){    
+    background-color: #e7ebf1;  
+}
+
+.open-flights-table tbody tr:nth-child(odd){
+    background-color: #dedede; 
+}

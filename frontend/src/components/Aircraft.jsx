@@ -3,6 +3,7 @@ import axios from "axios";
 import AircraftRow from "./AircraftRow";
 import AddAircraftForm from "./AddAircraftForm";
 import { UserContext } from "../UserContext";
+import './Aircraft.css'
 
 function Aircraft() {
     const { userContextData, setUserContextData } = useContext(UserContext)
@@ -27,21 +28,23 @@ function Aircraft() {
 
 
     return (
-        <div>
-            <AddAircraftForm setAircraft={setAircraft} />
-            <table>
-                <tbody>
+        <div className="aircraft-table-container">
+            <table className="aircraft-table">
+                <thead>
                     <tr>
                         <th>Type</th>
                         <th>Registration</th>
                         <th>Number of seats</th>
                         <th>Option</th>
                     </tr>
+                </thead>
+                <tbody>
                     {aircraft.map((aircraft) => (
                         <AircraftRow key={aircraft.id} aircraft={aircraft} setAircraft={setAircraft} />
                     ))}
                 </tbody>
             </table>
+            <AddAircraftForm setAircraft={setAircraft} />
         </div>
 
     )
