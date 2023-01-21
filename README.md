@@ -28,7 +28,7 @@ Open the directory "DS-Assigment-2022-2023/backend" in an IDE preferably Intelli
 
 You need NodeJS and NPM installed.
 
-Navigate to the "DS-Assigment-2022-20223/frontend" directory.
+Navigate to the "DS-Assigment-2022-2023/frontend" directory.
 
 Install the dependencies by running:
 
