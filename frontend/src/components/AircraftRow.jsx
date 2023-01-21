@@ -26,10 +26,10 @@ function AircraftRow({ aircraft, setAircraft }) {
 
     return (
         <tr>
-            <th>{aircraft.type}</th>
-            <th>{aircraft.registration}</th>
-            <th>{aircraft.numberOfSeats}</th>
-            <th><input type="button" value="Remove" onClick={handleRemove} /></th>
+            <td>{aircraft.type}</td>
+            <td>{aircraft.registration}</td>
+            <td>{aircraft.numberOfSeats}</td>
+            <td><input type="button" value="Remove" onClick={handleRemove} /></td>
         </tr>
     )
 

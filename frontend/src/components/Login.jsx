@@ -13,6 +13,8 @@ function Login() {
         email: '',
         password: ''
     })
+    const [error, setError] = useState('')
+    const navigate = useNavigate()
 
     const handleChange = (event) => {
         const name = event.target.name;
@@ -23,9 +25,6 @@ function Login() {
         }))
         setError('') //clear error message
     }
-
-    const [error, setError] = useState('')
-    const navigate = useNavigate()
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -78,6 +77,7 @@ function Login() {
             <div className="login-errors">
                 <b>{error}</b>
             </div>
+
         </div>
     )
 }

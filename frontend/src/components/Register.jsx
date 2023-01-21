@@ -1,10 +1,11 @@
-import React, { useContext, useState } from "react"
-import { UserContext } from "../UserContext";
+import React, { useState } from "react"
+import { Link } from "react-router-dom";
 import axios from "axios";
+import './Register.css'
 
 
 function Register() {
-    // const { userContextData, setUserContextData } = useContext(UserContext)
+    const [feedback, setFeedback] = useState('')
     const [registerForm, setRegisterForm] = useState({
         email: '',
         password: '',
@@ -13,36 +14,40 @@ function Register() {
     })
 
     const handleChange = (event) => {
+        setFeedback('')
         const name = event.target.name;
         const value = event.target.value;
         setRegisterForm((values) => ({
             ...values,
             [name]: value
         }))
-        setError('') //clear error message
     }
-
-    const [error, setError] = useState('')
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
         if (registerForm.email === '' || registerForm.password === '') {
-            setError('You must provide an email and password')
+            setFeedback('You must provide an email and password')
         } else {
             const REGISTER_URL = 'http://localhost:8080/authentication/register'
 
             async function fetchData() {
-                // const response = await axiosPost(REGISTER_URL, registerForm)
-
-                // if (response.status === 200) {
-                //     console.log(response.data); //DEBUG purposes
-                // }
                 try {
-                    const response = await axios.post(REGISTER_URL, registerForm)
-                    console.log(response.data);
+                    const response = await axios.post(`${process.env.REACT_APP_AUTHORITY_URL}${process.env.REACT_APP_REGISTER_URL}`, registerForm)
+                    if (response.status) {
+                        setFeedback('Registration successfull')
+                    }
                 } catch (error) {
-                    setError(error.response.data.message) //how to get body from axios error (really?)
+                    if (error.response) {
+                        console.log(error.response.data);
+                        console.log(error.response.status);
+                        console.log(error.response.headers);
+                        if (error.response.data.message) {
+                            setFeedback(error.response.data.message);
+                        }
+
+                    }
+
                 }
 
 
@@ -53,24 +58,18 @@ function Register() {
 
     return (
         <div className="register-component">
+            <h2>Register new user</h2>
             <form className="register-form">
-                <label htmlFor="email">e-mail:</label>
-                <input type="text" name="email" id="email" className="register-input-text" onChange={handleChange} value={registerForm.email} />
-
-                <label htmlFor="password">Password:</label>
-                <input type="text" name="password" id="password" className="register-input-text" onChange={handleChange} value={registerForm.password} />
-
-                <label htmlFor="firstname">First Name:</label>
-                <input type="text" name="firstname" id="firstname" className="register-input-text" onChange={handleChange} value={registerForm.firstname} />
-
-                <label htmlFor="lastname">Last Name:</label>
-                <input type="text" name="lastname" id="lastname" className="register-input-text" onChange={handleChange} value={registerForm.lastname} />
-
+                <input type="text" name="email" id="email" className="register-input-text" onChange={handleChange} value={registerForm.email} placeholder="email" />
+                <input type="password" name="password" id="password" className="register-input-text" onChange={handleChange} value={registerForm.password} placeholder="password" />
+                <input type="text" name="firstname" id="firstname" className="register-input-text" onChange={handleChange} value={registerForm.firstname} placeholder="First name" />
+                <input type="text" name="lastname" id="lastname" className="register-input-text" onChange={handleChange} value={registerForm.lastname} placeholder="Last name" />
                 <input value="Register" type="submit" name="register" id="register" className="register-button" onClick={handleSubmit} />
             </form>
             <div className="register-error-feedback">
-                <b>{error}</b>
+                <b>{feedback}</b>
             </div>
+            <Link to="/" className="return-link">Return</Link>
         </div>
     )
 }

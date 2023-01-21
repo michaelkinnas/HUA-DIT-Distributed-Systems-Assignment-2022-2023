@@ -28,7 +28,7 @@ function AdjustUserRoles() {
     return (
         <div className="admin-userRoles-table-container">
             <table className="admin-userRoles-table">
-                <tbody>
+                <thead>
                     <tr>
                         <th>Name</th>
                         <th>Email</th>
@@ -37,6 +37,8 @@ function AdjustUserRoles() {
                         <th>Admin</th>
                         <th>Controls</th>
                     </tr>
+                </thead>
+                <tbody>
                     {users.map((user) => (
                         <UserRoleControlsRow key={user.id} user={user} setUsers={setUsers} />
                     ))}

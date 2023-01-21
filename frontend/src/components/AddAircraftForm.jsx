@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { UserContext } from "../UserContext";
+import './AddAircraftForm.css'
 
 
 
@@ -54,7 +55,7 @@ export default function AddAircraftForm({ setAircraft }) {
 
 
     return (
-        <div className="add-aircraft">
+        <div className="add-aircraft-form-container">
             <form className="add-aircraft-form">
                 <label htmlFor="type">Model name:</label>
                 <input type="text" name="type" id="type" className="add-aircraft-input-text" onChange={handleChange} value={addAircraftForm.type} />
@@ -65,12 +66,11 @@ export default function AddAircraftForm({ setAircraft }) {
                 <label htmlFor="numberOfSeats">Number of seats:</label>
                 <input type="number" name="numberOfSeats" id="numberOfSeats" className="add-aircraft-input-text" onChange={handleChange} value={addAircraftForm.numberOfSeats} />
 
-                <input value="Submit" type="submit" name="register" id="register" className="register-button" onClick={handleSubmit} />
+                <input value="Submit" type="submit" name="register" id="register" className="add-aircraft-button" onClick={handleSubmit} />
             </form>
-            <div className="error-feedback">
+            <div className="feedback">
                 <b>{feedback}</b>
             </div>
-            {/* <Aircraft /> */}
         </div>
     )
 }
