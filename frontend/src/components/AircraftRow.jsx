@@ -3,7 +3,7 @@ import axios from "axios";
 import { UserContext } from "../UserContext";
 
 
-function AircraftRow({ aircraft, setAircraft }) {
+function AircraftRow({ aircraft, setAircraft, setFeedback }) {
     const { userContextData, setUserContextData } = useContext(UserContext)
 
 
@@ -18,7 +18,14 @@ function AircraftRow({ aircraft, setAircraft }) {
                 const response = await axios.post(`${process.env.REACT_APP_AUTHORITY_URL}${process.env.REACT_APP_DELETE_AIRCRAFT_URL}`, { "id": aircraft.id }, config)
                 setAircraft(response.data)
             } catch (error) {
-                console.log(error.response.data.message)
+                if (error.response) {
+                    console.log('Data: ' + error.response.data);
+                    console.log('Status: ' + error.response.status);
+                    console.log('Headers: ' + error.response.headers);
+                    if (error.response.data.message) {
+                        setFeedback(error.response.data.message);
+                    }
+                }
             }
         }
         callApi()

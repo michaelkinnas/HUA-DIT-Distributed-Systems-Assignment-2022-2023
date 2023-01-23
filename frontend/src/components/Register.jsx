@@ -29,8 +29,6 @@ function Register() {
         if (registerForm.email === '' || registerForm.password === '') {
             setFeedback('You must provide an email and password')
         } else {
-            const REGISTER_URL = 'http://localhost:8080/authentication/register'
-
             async function fetchData() {
                 try {
                     const response = await axios.post(`${process.env.REACT_APP_AUTHORITY_URL}${process.env.REACT_APP_REGISTER_URL}`, registerForm)

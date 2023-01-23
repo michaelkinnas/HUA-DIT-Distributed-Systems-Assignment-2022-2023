@@ -3,7 +3,7 @@ import axios from "axios";
 import { UserContext } from "../UserContext";
 
 
-function TourLocationRow({ tour, setTourLocations }) {
+function TourLocationRow({ tour, setTourLocations, setFeedback }) {
     const { userContextData, setUserContextData } = useContext(UserContext)
 
 
@@ -18,7 +18,14 @@ function TourLocationRow({ tour, setTourLocations }) {
                 const response = await axios.post(`${process.env.REACT_APP_AUTHORITY_URL}${process.env.REACT_APP_DELETE_TOUR_URL}`, { "id": tour.id }, config)
                 setTourLocations(response.data)
             } catch (error) {
-                console.log(error.response.data.message)
+                if (error.response) {
+                    console.log('Data: ' + error.response.data);
+                    console.log('Status: ' + error.response.status);
+                    console.log('Headers: ' + error.response.headers);
+                    if (error.response.data.message) {
+                        setFeedback(error.response.data.message);
+                    }
+                }
             }
         }
         callApi()

@@ -3,6 +3,7 @@ import { UserContext } from "../UserContext";
 import axios from "axios";
 import Navbar from "./Navbar";
 import PilotCurrentFlight from "./PilotCurrentFlight";
+import './PilotFunctions.css';
 
 export default function PilotFunctions() {
     const { userContextData, setUserContextData } = useContext(UserContext)
@@ -34,9 +35,12 @@ export default function PilotFunctions() {
 
             } catch (error) {
                 if (error.response) {
-                    console.log(error.response.data);
-                    console.log(error.response.status);
-                    console.log(error.response.headers);
+                    console.log('Data: ' + error.response.data);
+                    console.log('Status: ' + error.response.status);
+                    console.log('Headers: ' + error.response.headers);
+                    if (error.response.data.message) {
+                        setFeedback(error.response.data.message);
+                    }
                 }
             }
         }
@@ -72,9 +76,12 @@ export default function PilotFunctions() {
 
             } catch (error) {
                 if (error.response) {
-                    console.log(error.response.data);
-                    console.log(error.response.status);
-                    console.log(error.response.headers);
+                    console.log('Data: ' + error.response.data);
+                    console.log('Status: ' + error.response.status);
+                    console.log('Headers: ' + error.response.headers);
+                    if (error.response.data.message) {
+                        setFeedback(error.response.data.message);
+                    }
                 }
             }
         }
@@ -84,7 +91,7 @@ export default function PilotFunctions() {
     return (
         <div className="pilot-page">
             <Navbar />
-            <div className="pilot-panel">
+            <div className="pilot-panel-container">
                 <h4>Create a flight</h4>
                 <form>
                     <label htmlFor="tours">Tour</label>
@@ -104,8 +111,8 @@ export default function PilotFunctions() {
                     <input type="text" name="flightName" id="flightName" value={flightName} onChange={(e) => setFlightName(e.target.value)} />
                     <input type="button" value="Create Flight" onClick={handleCreateFlight} />
                 </form>
-                <PilotCurrentFlight />
-                <h4 className="message_feedback">{feedback}</h4>
+                <PilotCurrentFlight setFeedback={setFeedback} />
+                <h4 className="feedback">{feedback}</h4>
             </div>
         </div>
     )

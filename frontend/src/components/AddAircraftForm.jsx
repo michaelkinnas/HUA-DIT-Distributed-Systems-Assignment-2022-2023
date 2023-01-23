@@ -5,8 +5,7 @@ import './AddAircraftForm.css'
 
 
 
-export default function AddAircraftForm({ setAircraft }) {
-    const [feedback, setFeedback] = useState('')
+export default function AddAircraftForm({ setAircraft, setFeedback }) {
     const { userContextData, setUserContextData } = useContext(UserContext);
 
     const [addAircraftForm, setAddAircraftForm] = useState({
@@ -45,10 +44,15 @@ export default function AddAircraftForm({ setAircraft }) {
                 }
 
             } catch (error) {
-                setFeedback(error.response.data.error)
+                if (error.response) {
+                    console.log('Data: ' + error.response.data);
+                    console.log('Status: ' + error.response.status);
+                    console.log('Headers: ' + error.response.headers);
+                    if (error.response.data.message) {
+                        setFeedback(error.response.data.message);
+                    }
+                }
             }
-
-
         }
         callAPI();
     }
@@ -68,9 +72,6 @@ export default function AddAircraftForm({ setAircraft }) {
 
                 <input value="Submit" type="submit" name="register" id="register" className="add-aircraft-button" onClick={handleSubmit} />
             </form>
-            <div className="feedback">
-                <b>{feedback}</b>
-            </div>
         </div>
     )
 }
