@@ -14,7 +14,7 @@ export default function Navbar() {
     return (
         <nav className="navbar">
             <div className="left-logo">
-                <Link to="/home"><img src={logo} className="logo-png" /></Link>
+                <Link to="/home"><img src={logo} className="logo-png" /></Link><Link to="/home" className="home-link">Home</Link>
             </div>
             <div className="center-items">
                 {(userContextData.roles && userContextData.roles.includes("ROLE_ADMIN")) && <Link to="/admin" className="navbar-button">Admin</Link>}

@@ -4,7 +4,7 @@ import { UserContext } from "../UserContext";
 
 
 
-export default function OpenFlights({ flight, setFlights }) {
+export default function OpenFlights({ flight, setFlights, setFeedback }) {
     const { userContextData, setUserContextData } = useContext(UserContext)
 
     function handleRegister() {
@@ -24,7 +24,14 @@ export default function OpenFlights({ flight, setFlights }) {
                 const response = await axios.post(`${process.env.REACT_APP_AUTHORITY_URL}${process.env.REACT_APP_ACTIVE_FLIGHT_REGISTER}${flight.id}`, payload, config)
                 setFlights(response.data)
             } catch (error) {
-                console.log(error.response.data.message)
+                if (error.response) {
+                    console.log('Data: ' + error.response.data);
+                    console.log('Status: ' + error.response.status);
+                    console.log('Headers: ' + error.response.headers);
+                    if (error.response.data.message) {
+                        setFeedback(error.response.data.message);
+                    }
+                }
             }
         }
         callApi()
@@ -47,7 +54,14 @@ export default function OpenFlights({ flight, setFlights }) {
                 const response = await axios.post(`${process.env.REACT_APP_AUTHORITY_URL}${process.env.REACT_APP_ACTIVE_FLIGHT_UNREGISTER}${flight.id}`, payload, config)
                 setFlights(response.data)
             } catch (error) {
-                console.log(error.response.data.message)
+                if (error.response) {
+                    console.log('Data: ' + error.response.data);
+                    console.log('Status: ' + error.response.status);
+                    console.log('Headers: ' + error.response.headers);
+                    if (error.response.data.message) {
+                        setFeedback(error.response.data.message);
+                    }
+                }
             }
         }
         callApi()

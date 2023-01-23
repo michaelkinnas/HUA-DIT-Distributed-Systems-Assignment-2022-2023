@@ -26,16 +26,26 @@
 }
 
 
-.left-logo {
-    width: 200px;
-    
-}
-
-.left-logo {
+.left-logo {    
+    display: flex;
+    align-items: center;    
     margin-left: 20px;
+    width: 200px;
 }
 
-.logo-png {
+.home-link{
+    font-weight: bold;
+    font-size: large;
+    color:#07c;
+    text-decoration: none;
+}
+
+.home-link:hover{
+    text-decoration: none;
+    color: #ffbb00;
+}
+
+.logo-png {    
     margin-right: 10px;
     width: 40px;
 }
@@ -51,48 +61,46 @@
     width: 100px;
 }
 
-
-
 /* CSS */
 .navbar-button {
     margin-left: 4px;
     margin-right: 4px;
-  background-color: #0095ff;
-  border: 1px solid transparent;
-  border-radius: 3px;
-  box-shadow: rgba(255, 255, 255, .4) 0 1px 0 0 inset;
-  box-sizing: border-box;
-  color: #fff;
-  cursor: pointer;
-  display: inline-block;
-  font-family: -apple-system,system-ui,"Segoe UI","Liberation Sans",sans-serif;
-  font-size: 15px;
-  font-weight: bold;
-  line-height: 1.15385;
-  /* margin: 0; */
-  outline: none;
-  padding: 8px .8em;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  vertical-align: baseline;
-  white-space: nowrap;
+    background-color: #0095ff;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    box-shadow: rgba(255, 255, 255, .4) 0 1px 0 0 inset;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: -apple-system,system-ui,"Segoe UI","Liberation Sans",sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 1.15385;
+    /* margin: 0; */
+    outline: none;
+    padding: 8px .8em;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: baseline;
+    white-space: nowrap;
 }
 
 .navbar-button:hover,
 .navbar-button:focus {
-  background-color: #07c;
+    background-color: #07c;
 }
 
 .navbar-button:focus {
-  box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
+    box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
 }
 
 .navbar-button:active {
-  background-color: #0064bd;
-  box-shadow: none;
+    background-color: #0064bd;
+    box-shadow: none;
 }
 

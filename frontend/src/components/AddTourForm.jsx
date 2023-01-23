@@ -3,8 +3,8 @@ import axios from "axios";
 import { UserContext } from "../UserContext";
 
 
-export default function AddTourForm({ setTourLocations }) {
-    const [feedback, setFeedback] = useState('')
+export default function AddTourForm({ setTourLocations, setFeedback }) {
+
     const { userContextData, setUserContextData } = useContext(UserContext);
 
     const [addTourForm, setAddTourForm] = useState({
@@ -43,7 +43,14 @@ export default function AddTourForm({ setTourLocations }) {
                     setTourLocations(response.data)
                 }
             } catch (error) {
-                setFeedback(error.response.data.error)
+                if (error.response) {
+                    console.log('Data: ' + error.response.data);
+                    console.log('Status: ' + error.response.status);
+                    console.log('Headers: ' + error.response.headers);
+                    if (error.response.data.message) {
+                        setFeedback(error.response.data.message);
+                    }
+                }
             }
 
         }
@@ -65,9 +72,6 @@ export default function AddTourForm({ setTourLocations }) {
 
                 <input value="Submit" type="submit" name="register" id="register" className="add-tour-button" onClick={handleSubmit} />
             </form>
-            <div className="error-feedback">
-                <b>{feedback}</b>
-            </div>
         </div>
     )
 }

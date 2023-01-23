@@ -8,6 +8,7 @@ import './Aircraft.css'
 function Aircraft() {
     const { userContextData, setUserContextData } = useContext(UserContext)
     const [aircraft, setAircraft] = useState([])
+    const [feedback, setFeedback] = useState('')
 
 
     useEffect(() => {
@@ -20,7 +21,14 @@ function Aircraft() {
                 const response = await axios.get(process.env.REACT_APP_AUTHORITY_URL + process.env.REACT_APP_GET_AIRCRAFT_URL, config)
                 setAircraft(response.data)
             } catch (error) {
-                console.log(error.response.data.message)
+                if (error.response) {
+                    console.log('Data: ' + error.response.data);
+                    console.log('Status: ' + error.response.status);
+                    console.log('Headers: ' + error.response.headers);
+                    if (error.response.data.message) {
+                        setFeedback(error.response.data.message);
+                    }
+                }
             }
         }
         callAPI()
@@ -40,11 +48,12 @@ function Aircraft() {
                 </thead>
                 <tbody>
                     {aircraft.map((aircraft) => (
-                        <AircraftRow key={aircraft.id} aircraft={aircraft} setAircraft={setAircraft} />
+                        <AircraftRow key={aircraft.id} aircraft={aircraft} setAircraft={setAircraft} setFeedback={setFeedback} />
                     ))}
                 </tbody>
             </table>
             <AddAircraftForm setAircraft={setAircraft} />
+            <h4>{feedback}</h4>
         </div>
 
     )
