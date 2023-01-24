@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -15,27 +17,27 @@ public class Aircraft {
     // define fields
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="aircraft_id")
     private int id;
 
-    @Column(name="type")
+    @NotBlank(message = "Please provide the aircraft type.")
     @Size(max = 30)
     private String type;
 
-    @Column(name="no_seats")
+    //@NotEmpty(message = "Please provide the aircraft's number of seats.")
     private int noSeats;
 
-    @Column(name="registration", unique = true)
-    @Size(max = 30)
+    @NotBlank(message = "Please provide the aircraft's registration.")
+    @Column(unique = true)
+    @Size(max = 50)
     private String registration;
 
     //define constructors
     public Aircraft() {}
 
-    public Aircraft(String type, int noSeats, String registration) {
+    public Aircraft(String type, String registration, int noSeats) {
         this.type = type;
-        this.noSeats = noSeats;
         this.registration = registration;
+        this.noSeats = noSeats;
     }
 
     // define getters-setters

@@ -1,6 +1,7 @@
 package laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.List;
 
@@ -12,21 +13,40 @@ public class Flight {
     private Integer id;
 
     @Size(max = 100)
-    private String activeTourName;
+    @NotBlank(message = "Please provide a flight name.")
+    private String flightName;
 
-    @Column(name = "pilotId")
-    private int pilotId;
+    @OneToOne
+    private User pilot;
 
-    @OneToMany(cascade=CascadeType.ALL)
-    public List<User> passengers;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<User> passengers;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Aircraft flightAircraft;
+
+    @OneToOne
+    private Tour flightTour;
+
+    private  boolean open;
 
     public Flight() {}
 
-    public Flight(String activeTourName, int pilotId) {
-        this.activeTourName = activeTourName;
-        this.pilotId = pilotId;
+    public Flight(String flightName, User pilot, Aircraft flightAircraft, Tour flightTour, boolean open) {
+        this.flightName = flightName;
+        this.pilot = pilot;
+        this.flightAircraft = flightAircraft;
+        this.flightTour = flightTour;
+        this.open = open;
     }
 
+    public List<User> getPassengers() {
+        return passengers;
+    }
+
+    public void setPassengers(List<User> passengers) {
+        passengers.addAll(passengers);
+    }
     public int getId() {
         return id;
     }
@@ -35,22 +55,47 @@ public class Flight {
         this.id = id;
     }
 
-    public String getActiveTourName() {
-        return activeTourName;
+    public String getFlightName() {
+        return flightName;
     }
 
-    public void setActiveTourName(String activeTourName) {
-        this.activeTourName = activeTourName;
+    public void setFlightName(String flightName) {
+        this.flightName = flightName;
     }
 
-    public int getPilotId() {
-        return pilotId;
+    public User getPilot() {
+        return pilot;
     }
 
-    public void setPilotId(int pilotId) {
-        this.pilotId = pilotId;
+    public void setPilot(User pilot) {
+        this.pilot = pilot;
+    }
+
+    public Aircraft getFlightAircraft() {
+        return flightAircraft;
+    }
+
+    public void setFlightAircraft(Aircraft flightAircraft) {
+        this.flightAircraft = flightAircraft;
+    }
+
+    public Tour getFlightTour() {
+        return flightTour;
+    }
+
+    public void setFlightTour(Tour flightTour) {
+        this.flightTour = flightTour;
+    }
+
+    public boolean getOpen() {
+        return open;
+    }
+
+    public void setOpen(boolean open) {
+        this.open = open;
     }
     public String toString() {
-        return "Active Tour [id= " + id + ", activeTourName= " + activeTourName + ", pilotId= " + pilotId + "]";
+        return "Flight [id= " + id + ", flightName= " + flightName + ", pilot= " + pilot + ", flightAircraft= " + flightAircraft + "" +
+                ", flightTour= " + flightTour + ", open= " + open + ", passengers= " + passengers + "]";
     }
 }

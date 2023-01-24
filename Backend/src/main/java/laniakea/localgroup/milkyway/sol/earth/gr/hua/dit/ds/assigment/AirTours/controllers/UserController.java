@@ -9,7 +9,9 @@ import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.r
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 // RestController manages JSONs
 @RestController
@@ -26,33 +28,61 @@ public class UserController {
     FlightRepository flightRepository;
 
     //RETURN ALL TOURS
-    @GetMapping("tours")
-    public List<Tour> getAll() {
-        return tourRepository.findAll();
+    @GetMapping("flights")
+     List<Flight> getAllFlights() {
+        return flightRepository.findAll();
     }
 
     //USER REGISTER TOUR SEAT
     @PostMapping("flight-register/{flightId}")
-    public List<Flight> registerFlight(@PathVariable Long id, @RequestBody User user) {
-        Long userId = user.getId();//get id from user json
-        int flightId = flightRepository.findFlightById(id).getId();//get flight id from path v.
-        User searchUser = userRepository.findById(userId);//find by id from user table
-        Flight searchFlight = flightRepository.findFlightById((long) flightId);//find by id flight table
-        searchFlight.passengers.add(searchUser);//flight1.passenger.add(user1)
-        flightRepository.save(searchFlight);//rep.saveflight(flight1)
-        return flightRepository.findAll();
+     Flight registerFlight(@PathVariable Long id, @RequestBody User user) throws Exception {
+
+        Long userId = user.getId();//   find  user id
+        User passenger = userRepository.findById(userId);//    get passenger object
+
+        int flightId = flightRepository.findFlightById(id).getId();//        get flight id
+        Flight flight = flightRepository.findFlightById((long) flightId);//     get flight
+
+        List<User> passengers = flight.getPassengers();
+
+        boolean passengerHasNoFlight = true;
+        List<Flight> flights = flightRepository.findAll();
+        for (Flight tempFlight : flights) {
+
+            if ((tempFlight.getPassengers().contains(passenger)) && (tempFlight.getOpen() == true)) {
+                passengerHasNoFlight = false;
+            }
+        }
+
+        if ((flight.getPassengers().size() < flight.getFlightAircraft().getNoSeats()) && (passengerHasNoFlight == true)
+        && (Collections.frequency(flight.getPassengers(), passenger) != 0)) {
+            passengers.add(passenger);
+            flight.setPassengers(passengers);
+            flightRepository.save(flight);
+            return flight;
+        }else {
+            return null;
+        }
     }
 
     @PostMapping("flight-unregister/{flightId}")
-    public List<Flight> unregisterFlight(@PathVariable Long id, @RequestBody User user) {
-        Long userId = user.getId();//get id from user json
-        int flightId = flightRepository.findFlightById(id).getId();//get flight id from path v.
-        User searchUser = userRepository.findById(userId);//find by id from user table
-        Flight searchFlight = flightRepository.findFlightById((long) flightId);//find by id flight table
-        searchFlight.passengers.remove(searchUser);
-        flightRepository.save(searchFlight);
-        return flightRepository.findAll();
+    Flight unregisterFlight(@PathVariable Long id, @RequestBody User user) {
+
+        Long userId = user.getId();//     user id
+        User passenger = userRepository.findById(userId);// passenger
+
+        int flightId = flightRepository.findFlightById(id).getId();//        get flight id
+        Flight flight = flightRepository.findFlightById((long) flightId);//     get flight
+
+        List<User> passengers = flight.getPassengers();
+
+        if ((flight.getPassengers().contains(passenger)) && (flight.getOpen() == true)) {
+            passengers.remove(passenger);
+            flight.setPassengers(passengers);
+            flightRepository.save(flight);
+            return flight;
+        } else {
+            return null;
+        }
     }
-
-
 }
