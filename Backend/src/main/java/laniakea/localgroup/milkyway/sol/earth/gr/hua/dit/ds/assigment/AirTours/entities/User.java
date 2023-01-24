@@ -17,25 +17,24 @@ public class User {
     // define fields
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="user_id")
     private Long id;
 
     @Column(name="first_name")
-    @NotBlank(message="Please enter the first name")
-    @Size(max =30, message= "Name should not be greater than 30 characters")
+    @NotBlank(message="Please provide a first name.")
+    @Size(max =50, message= "Name should not be greater than 50 characters.")
     private String firstName;
 
     @Column(name="last_name")
-    @NotBlank(message="Please enter the last name")
-    @Size(max =30, message= "Name should not be greater than 30 characters")
+    @NotBlank(message="Please provide a last name.")
+    @Size(max =50, message= "Name should not be greater than 50 characters.")
     private String lastName;
 
     @Column(unique = true)
-    @Email(message = "Please enter a valid email")  // It checks the email format, to be valid.
+    @Email(message = "Please provide a valid email.")  // It checks the email format, to be valid.
     @Size(max = 50)
     private String email;
 
-    @Column(name="password")
+    @NotBlank(message = "Please provide a password.")
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY)

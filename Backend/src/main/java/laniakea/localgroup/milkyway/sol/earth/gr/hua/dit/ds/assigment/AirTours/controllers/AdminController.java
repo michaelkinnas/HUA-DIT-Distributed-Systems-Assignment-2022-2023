@@ -36,16 +36,16 @@ public class AdminController {
         return aircraftRepository.findAll();
     }
 
-    @PutMapping("/aircraft-add")
+    @PostMapping("/aircraft-add")
     public Aircraft addAircraft(@RequestBody Aircraft aircraft) {
         aircraftRepository.save(aircraft);
         return aircraft;
     }
 
-    @PutMapping("/aircraft-remove")
-    public Aircraft removeAircraft(@RequestBody Aircraft aircraft) {
+    @PostMapping("/aircraft-remove")
+    public List<Aircraft> removeAircraft(@RequestBody Aircraft aircraft) {
         aircraftRepository.deleteById(aircraft.getId());
-        return  aircraft;
+        return aircraftRepository.findAll();
     }
 
     @GetMapping("/tours")
@@ -54,15 +54,14 @@ public class AdminController {
     }
 
     @PostMapping("/tour-add")
-    public Tour addTour(@RequestBody Tour tour) {
+    public List<Tour> addTour(@RequestBody Tour tour) {
         tourRepository.save(tour);
-        return  tour;
+        return  tourRepository.findAll();
     }
 
     @PostMapping("/tour-remove")
-    public Tour removeTour(@RequestBody Tour tour) {
+    public void removeTour(@RequestBody Tour tour) {
         tourRepository.deleteById(tour.getId());
-        return tour;
     }
 
     @GetMapping("/users")
@@ -71,22 +70,28 @@ public class AdminController {
     }
 
     @PostMapping("/role-add/{userId}")
-    public List<User> addRole(@PathVariable Long userId, @RequestBody User user) {
+    public List<User> addRole(@PathVariable Long userId, @RequestBody Role role) {
 
-        Set<Role> roles = user.getRoles();
-        User tempUser = userRepository.findById(userId);
-        tempUser.setRoles(roles);
-        userRepository.save(tempUser);
+        Long Id = userRepository.findById(userId).getId();//    user id
+        User user = userRepository.findById(Id);//      user object
+
+        Set<Role> newRoles = user.getRoles();
+        newRoles.add(role);
+        user.setRoles(newRoles);
+        userRepository.save(user);
         return userRepository.findAll();
     }
 
     @PostMapping("/role-remove/{userId}")
-    public List<User> removeRole(@PathVariable Long userId, @RequestBody User user) {
+    public List<User> removeRole(@PathVariable Long userId, @RequestBody Role role) {
 
-        Set<Role> roles = user.getRoles();
-        User tempUser = userRepository.findById(userId);
-        tempUser.setRoles(roles);
-        userRepository.save(tempUser);
+        Long Id = userRepository.findById(userId).getId();//    user id
+        User user = userRepository.findById(Id);//      user object
+
+        Set<Role> newRoles = user.getRoles();
+        newRoles.remove(role);
+        user.setRoles(newRoles);
+        userRepository.save(user);
         return userRepository.findAll();
     }
 

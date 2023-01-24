@@ -1,6 +1,8 @@
 package laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.List;
 
@@ -12,27 +14,26 @@ public class Tour {
     //define fields
     @Id     //primary key
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="tour_id")
     private int id;
 
-    @Column(name="name")
-    @Size(max = 100)
-    private String name;
+    @NotBlank(message = "Please provide a tour description.")
+    @Size(max = 200)
+    private String description;
 
-    @Column(name="location")
+    @NotBlank(message = "Please provide a tour location.")
     @Size(max = 100)
     private String location;
 
-    @Column(name="duration")
-    private float duration;
+    @NotEmpty(message = "Please provide the duration of the tour.")
+    private Integer duration;
 
     // define constructors
     public Tour() {
 
     }
 
-    public Tour(String name, String location, float duration) {
-        this.name = name;
+    public Tour(String description, String location, Integer duration) {
+        this.description = description;
         this.location = location;
         this.duration = duration;
     }
@@ -47,24 +48,26 @@ public class Tour {
     }
 
     public String getName() {
-        return name;
+        return description;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String description) {
+        this.description = description;
     }
 
     public String getLocation() {
         return location;
     }
 
-    public void setLocation(String location) { this.location = location; }
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
-    public float getDuration() {
+    public Integer getDuration() {
         return duration;
     }
 
-    public void setDuration(float duration) {
+    public void setDuration(Integer duration) {
         this.duration = duration;
     }
 
@@ -72,7 +75,7 @@ public class Tour {
 
     // print fields
     public String toString() {
-        return "Tour [id= " + id + ", name= " + name + ", " +
+        return "Tour [id= " + id + ", description= " + description + ", " +
                 "location= " + location + ", duration= " + duration + "]";
     }
 }
