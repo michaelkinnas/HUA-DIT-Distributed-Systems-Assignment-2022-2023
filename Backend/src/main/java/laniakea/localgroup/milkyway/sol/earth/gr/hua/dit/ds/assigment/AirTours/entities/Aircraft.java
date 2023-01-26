@@ -19,25 +19,20 @@ public class Aircraft {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @NotBlank(message = "Please provide the aircraft type.")
-    @Size(max = 30)
     private String type;
 
-    //@NotEmpty(message = "Please provide the aircraft's number of seats.")
-    private int noSeats;
+    private int numberOfSeats;
 
-    @NotBlank(message = "Please provide the aircraft's registration.")
-    @Column(unique = true)
-    @Size(max = 50)
     private String registration;
 
     //define constructors
     public Aircraft() {}
 
-    public Aircraft(String type, String registration, int noSeats) {
+    public Aircraft(String type, int numberOfSeats, String registration) {
         this.type = type;
+        this.numberOfSeats = numberOfSeats;
         this.registration = registration;
-        this.noSeats = noSeats;
+
     }
 
     // define getters-setters
@@ -49,16 +44,20 @@ public class Aircraft {
         this.id = id;
     }
 
-    public String getType() { return type; }
-
-    public void setType(String type) { this.type = type; }
-
-    public int getNoSeats() {
-        return noSeats;
+    public String getType() {
+        return type;
     }
 
-    public void setNoSeats(int noSeats) {
-        this.noSeats = noSeats;
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public int getNumberOfSeats() {
+        return numberOfSeats;
+    }
+
+    public void setNumberOfSeats(int numberOfSeats) {
+        this.numberOfSeats = numberOfSeats;
     }
 
     public String getRegistration() {
@@ -71,7 +70,7 @@ public class Aircraft {
 
     // print fields
     public String toString() {
-        return "Aircraft [id= " + id + ", noSeats= " + noSeats + ", " +
+        return "Aircraft [id= " + id + ", type= " + type + ", numberOfSeats= " + numberOfSeats + ", " +
                 "registration= " + registration + "]";
     }
 }
