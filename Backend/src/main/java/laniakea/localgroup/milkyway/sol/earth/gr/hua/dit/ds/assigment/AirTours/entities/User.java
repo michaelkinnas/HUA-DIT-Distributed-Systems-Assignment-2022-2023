@@ -17,71 +17,51 @@ public class User {
     // define fields
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private int id;
 
-    @Column(name="first_name")
-    @NotBlank(message="Please provide a first name.")
-    @Size(max =50, message= "Name should not be greater than 50 characters.")
-    private String firstName;
+    private String firstname;
 
-    @Column(name="last_name")
-    @NotBlank(message="Please provide a last name.")
-    @Size(max =50, message= "Name should not be greater than 50 characters.")
-    private String lastName;
+    private String lastname;
 
-    @Column(unique = true)
-    @Email(message = "Please provide a valid email.")  // It checks the email format, to be valid.
-    @Size(max = 50)
     private String email;
 
-    @NotBlank(message = "Please provide a password.")
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<Role> roles = new HashSet<>();
 
-    public Set<Role> getRoles() {
-        return roles;
-    }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-
-    // define constructors
     public User() {}
 
-    public User(String firstName, String lastName, String email, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public User(String firstname, String lastname, String email, String password) {
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.email = email;
         this.password = password;
     }
 
-    // define getters-setters
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
     public String getFirstName() {
-        return firstName;
+        return firstname;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirstName(String firstname) {
+        this.firstname = firstname;
     }
 
     public String getLastName() {
-        return lastName;
+        return lastname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastName(String lastname) {
+        this.lastname = lastname;
     }
 
     public String getEmail() {
@@ -100,9 +80,20 @@ public class User {
         this.password = password;
     }
 
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+
+
     // print fields
     public String toString() {
-        return "User [id= " + id + ", firstName= " + firstName + ",lastName= " + lastName + "," +
-                " email= " + email + "]";
+        return "User [id= " + id + ", firstname= " + firstname + ",lastname= " + lastname + "," +
+                " email= " + email + ", password= " + password + "]";
     }
 }

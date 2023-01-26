@@ -11,28 +11,22 @@ import java.util.List;
 @Table(name="tour")
 public class Tour {
 
-    //define fields
     @Id     //primary key
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @NotBlank(message = "Please provide a tour description.")
-    @Size(max = 200)
     private String description;
 
-    @NotBlank(message = "Please provide a tour location.")
-    @Size(max = 100)
     private String location;
 
-    @NotEmpty(message = "Please provide the duration of the tour.")
-    private Integer duration;
+    private int duration;
 
     // define constructors
     public Tour() {
 
     }
 
-    public Tour(String description, String location, Integer duration) {
+    public Tour(String description, String location, int duration) {
         this.description = description;
         this.location = location;
         this.duration = duration;
@@ -47,11 +41,11 @@ public class Tour {
         this.id = id;
     }
 
-    public String getName() {
+    public String getDescription() {
         return description;
     }
 
-    public void setName(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -63,11 +57,11 @@ public class Tour {
         this.location = location;
     }
 
-    public Integer getDuration() {
+    public int getDuration() {
         return duration;
     }
 
-    public void setDuration(Integer duration) {
+    public void setDuration(int duration) {
         this.duration = duration;
     }
 

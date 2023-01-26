@@ -9,7 +9,9 @@ import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.r
 import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.repository.TourRepository;
 import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashSet;
 import java.util.List;
@@ -33,63 +35,81 @@ public class AdminController {
 
     @GetMapping("/aircraft")
     public List<Aircraft> getAllAircrafts() {
+
         return aircraftRepository.findAll();
     }
 
     @PostMapping("/aircraft-add")
-    public Aircraft addAircraft(@RequestBody Aircraft aircraft) {
+    public List<Aircraft> addAircraft(@RequestBody Aircraft aircraft) {
+
         aircraftRepository.save(aircraft);
-        return aircraft;
+        return aircraftRepository.findAll();
     }
 
     @PostMapping("/aircraft-remove")
     public List<Aircraft> removeAircraft(@RequestBody Aircraft aircraft) {
+        
         aircraftRepository.deleteById(aircraft.getId());
         return aircraftRepository.findAll();
     }
 
     @GetMapping("/tours")
     public List<Tour> getAllTours() {
+
         return tourRepository.findAll();
     }
 
     @PostMapping("/tour-add")
     public List<Tour> addTour(@RequestBody Tour tour) {
+
         tourRepository.save(tour);
         return  tourRepository.findAll();
     }
 
     @PostMapping("/tour-remove")
-    public void removeTour(@RequestBody Tour tour) {
+    public List<Tour> removeTour(@RequestBody Tour tour) {
+
         tourRepository.deleteById(tour.getId());
+        return  tourRepository.findAll();
     }
 
     @GetMapping("/users")
     public List<User> getAllUsers() {
+
         return userRepository.findAll();
     }
 
     @PostMapping("/role-add/{userId}")
-    public List<User> addRole(@PathVariable Long userId, @RequestBody Role role) {
+    public List<User> addRole(@PathVariable int userId, @RequestBody Role role) {
 
-        Long Id = userRepository.findById(userId).getId();//    user id
-        User user = userRepository.findById(Id);//      user object
+        User user = userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "No such user exists"
+        ));
+
+        Role newRole = roleRepository.findById(role.getId()).orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "No such role exists"
+        ));
 
         Set<Role> newRoles = user.getRoles();
-        newRoles.add(role);
+        newRoles.add(newRole);
         user.setRoles(newRoles);
         userRepository.save(user);
         return userRepository.findAll();
     }
 
     @PostMapping("/role-remove/{userId}")
-    public List<User> removeRole(@PathVariable Long userId, @RequestBody Role role) {
+    public List<User> removeRole(@PathVariable int userId, @RequestBody Role role) {
 
-        Long Id = userRepository.findById(userId).getId();//    user id
-        User user = userRepository.findById(Id);//      user object
+        User user = userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "No such user exists"
+        ));;
+
+        Role newRole = roleRepository.findById(role.getId()).orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "No such role exists"
+        ));
 
         Set<Role> newRoles = user.getRoles();
-        newRoles.remove(role);
+        newRoles.remove(newRole);
         user.setRoles(newRoles);
         userRepository.save(user);
         return userRepository.findAll();

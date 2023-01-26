@@ -9,11 +9,4 @@ import java.util.List;
 @Repository
 public interface FlightRepository extends JpaRepository<Flight, Integer> {
 
-    //List
-
-    Flight findFlightById(Long id);
-
-    List<Flight> findByPilot_Id(Long pId);
-
-    void deleteByPilot_Id(Long pId);
 }

@@ -7,8 +7,11 @@ import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.r
 import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.repository.TourRepository;
 import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -27,62 +30,79 @@ public class UserController {
     @Autowired
     FlightRepository flightRepository;
 
-    //RETURN ALL TOURS
+
     @GetMapping("flights")
-     List<Flight> getAllFlights() {
-        return flightRepository.findAll();
+    List<Flight> getAllFlights() {
+
+        List<Flight> allFlights =  flightRepository.findAll();
+
+        //List<Flight> openFlights = Collections.emptyList();
+        ArrayList<Flight> openFlights = new ArrayList<>();
+
+        for (Flight tempFlight : allFlights) {
+            if (tempFlight.getOpen()) {
+                openFlights.add(tempFlight);
+            }
+        }
+
+        if (openFlights.size() == 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No open flights available");
+        }else {
+            return openFlights;
+        }
     }
 
     //USER REGISTER TOUR SEAT
     @PostMapping("flight-register/{flightId}")
-     Flight registerFlight(@PathVariable Long id, @RequestBody User user) throws Exception {
+    List<Flight> registerFlight(@PathVariable int flightId, @RequestBody User user) {
 
-        Long userId = user.getId();//   find  user id
-        User passenger = userRepository.findById(userId);//    get passenger object
+        User passenger = userRepository.findById(user.getId()).orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "No such user exists"
+        ));
 
-        int flightId = flightRepository.findFlightById(id).getId();//        get flight id
-        Flight flight = flightRepository.findFlightById((long) flightId);//     get flight
+        Flight flight = flightRepository.findById(flightId).orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "No such flight exists"
+        ));
 
         List<User> passengers = flight.getPassengers();
 
-        boolean passengerHasNoFlight = true;
         List<Flight> flights = flightRepository.findAll();
-        for (Flight tempFlight : flights) {
 
-            if ((tempFlight.getPassengers().contains(passenger)) && (tempFlight.getOpen() == true)) {
-                passengerHasNoFlight = false;
+        for (Flight tempFlight : flights) {
+            if ((tempFlight.getPassengers().contains(passenger)) && (tempFlight.getOpen())) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User is already registered in a flight");
             }
         }
 
-        if ((flight.getPassengers().size() < flight.getFlightAircraft().getNoSeats()) && (passengerHasNoFlight == true)
-        && (Collections.frequency(flight.getPassengers(), passenger) != 0)) {
-            passengers.add(passenger);
-            flight.setPassengers(passengers);
-            flightRepository.save(flight);
-            return flight;
-        }else {
-            return null;
+        if ((passengers.size() >= flight.getAircraft().getNumberOfSeats())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No empty seats");
+
         }
+        passengers.add(passenger);
+        flight.setPassengers(passengers);
+        flightRepository.save(flight);
+        return flightRepository.findAll();
     }
 
     @PostMapping("flight-unregister/{flightId}")
-    Flight unregisterFlight(@PathVariable Long id, @RequestBody User user) {
+    List<Flight> unregisterFlight(@PathVariable int flightId, @RequestBody User user) {
 
-        Long userId = user.getId();//     user id
-        User passenger = userRepository.findById(userId);// passenger
+        User passenger = userRepository.findById(user.getId()).orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "No such user exists"
+        ));
 
-        int flightId = flightRepository.findFlightById(id).getId();//        get flight id
-        Flight flight = flightRepository.findFlightById((long) flightId);//     get flight
+        Flight flight = flightRepository.findById(flightId).orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "No such flight exists"
+        ));
 
         List<User> passengers = flight.getPassengers();
 
-        if ((flight.getPassengers().contains(passenger)) && (flight.getOpen() == true)) {
+        if ((passengers.contains(passenger)) && (flight.getOpen())) {
             passengers.remove(passenger);
             flight.setPassengers(passengers);
             flightRepository.save(flight);
-            return flight;
-        } else {
-            return null;
+
         }
+        return flightRepository.findAll();
     }
 }

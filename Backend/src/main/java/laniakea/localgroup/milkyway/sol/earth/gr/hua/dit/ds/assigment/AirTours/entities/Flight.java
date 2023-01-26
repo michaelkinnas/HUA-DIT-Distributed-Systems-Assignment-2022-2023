@@ -10,43 +10,38 @@ import java.util.List;
 public class Flight {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private int id;
 
-    @Size(max = 100)
-    @NotBlank(message = "Please provide a flight name.")
-    private String flightName;
+    private String name;
+
+    private  boolean open;
 
     @OneToOne
     private User pilot;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.MERGE)
     private List<User> passengers;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Aircraft flightAircraft;
+    @OneToOne(cascade = CascadeType.MERGE)
+    private Aircraft aircraft;
 
-    @OneToOne
-    private Tour flightTour;
+    @OneToOne(cascade = CascadeType.MERGE)
+    private Tour tour;
 
-    private  boolean open;
+
 
     public Flight() {}
 
-    public Flight(String flightName, User pilot, Aircraft flightAircraft, Tour flightTour, boolean open) {
-        this.flightName = flightName;
-        this.pilot = pilot;
-        this.flightAircraft = flightAircraft;
-        this.flightTour = flightTour;
+    public Flight(String name, boolean open, User pilot, List<User> passengers, Aircraft aircraft, Tour tour) {
+        this.name = name;
         this.open = open;
+        this.pilot = pilot;
+        this.passengers = passengers;
+        this.aircraft = aircraft;
+        this.tour = tour;
     }
 
-    public List<User> getPassengers() {
-        return passengers;
-    }
 
-    public void setPassengers(List<User> passengers) {
-        passengers.addAll(passengers);
-    }
     public int getId() {
         return id;
     }
@@ -55,12 +50,20 @@ public class Flight {
         this.id = id;
     }
 
-    public String getFlightName() {
-        return flightName;
+    public String getName() {
+        return name;
     }
 
-    public void setFlightName(String flightName) {
-        this.flightName = flightName;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean getOpen() {
+        return open;
+    }
+
+    public void setOpen(boolean open) {
+        this.open = open;
     }
 
     public User getPilot() {
@@ -71,31 +74,33 @@ public class Flight {
         this.pilot = pilot;
     }
 
-    public Aircraft getFlightAircraft() {
-        return flightAircraft;
+    public List<User> getPassengers() {
+        return passengers;
     }
 
-    public void setFlightAircraft(Aircraft flightAircraft) {
-        this.flightAircraft = flightAircraft;
+    public void setPassengers(List<User> passengers) {
+        this.passengers = passengers;
     }
 
-    public Tour getFlightTour() {
-        return flightTour;
+    public Aircraft getAircraft() {
+        return aircraft;
     }
 
-    public void setFlightTour(Tour flightTour) {
-        this.flightTour = flightTour;
+    public void setAircraft(Aircraft aircraft) {
+        this.aircraft = aircraft;
     }
 
-    public boolean getOpen() {
-        return open;
+    public Tour getTour() {
+        return tour;
     }
 
-    public void setOpen(boolean open) {
-        this.open = open;
+    public void setTour(Tour tour) {
+        this.tour = tour;
     }
+
+
     public String toString() {
-        return "Flight [id= " + id + ", flightName= " + flightName + ", pilot= " + pilot + ", flightAircraft= " + flightAircraft + "" +
-                ", flightTour= " + flightTour + ", open= " + open + ", passengers= " + passengers + "]";
+        return "Flight [id= " + id + ", flightName= " + name + ", pilot= " + pilot + ", flightAircraft= " + aircraft + "" +
+                ", flightTour= " + tour + ", open= " + open + ", passengers= " + passengers + "]";
     }
 }

@@ -8,10 +8,19 @@ import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.r
 import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.repository.TourRepository;
 import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
+//@Transactional
+//@EnableTransactionManagement
+//@Scope(proxyMode = ScopedProxyMode.INTERFACES)
 @RestController
 @RequestMapping("/pilot")
 public class PilotController {
@@ -29,61 +38,70 @@ public class PilotController {
     AircraftRepository aircraftRepository;
 
     @GetMapping("/active-flight/{pilotId}")
-    Flight get(@PathVariable Long pilotId) {
-        Long pId = userRepository.findById(pilotId).getId();//find user (pilot) object and get id from the object
-        List<Flight> flights = flightRepository.findByPilot_Id(pId);
+    Flight get(@PathVariable int pilotId) {
+
+        List<Flight> flights = flightRepository.findAll();
+
         Flight openFlight = null;
+
         for (Flight tempFlight : flights) {
-            if (tempFlight.getOpen() == true) {
+            if ((tempFlight.getPilot().getId() == pilotId) && tempFlight.getOpen() == true) {
                 openFlight = tempFlight;
             }
         }
-        return openFlight;
+        if (openFlight != null) {
+            return openFlight;
+        }else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No active flight found");
+        }
     }
 
 
     @PostMapping("/create-flight/{pilotId}")
-    Flight createFlight(@PathVariable Long pilotId, @RequestBody Flight flight) {
-        Long pId = userRepository.findById(pilotId).getId();
-        List<Flight> flights = flightRepository.findByPilot_Id(pId);
-        Flight openFlight = null;
+    Flight createFlight(@PathVariable int pilotId, @RequestBody Flight flight) {
+
+        List<Flight> flights = flightRepository.findAll();
+
+        boolean openFlightExists = false;
+
         for (Flight tempFlight : flights) {
-            if (tempFlight.getOpen() == true) {
-                openFlight = tempFlight;
+            if ((tempFlight.getPilot().getId() == pilotId) && tempFlight.getOpen()) {
+                openFlightExists = true;
             }
         }
-        if (openFlight == null) {
+        if (openFlightExists == false) {
             flightRepository.save(flight);
             return flight;
         }else {
-            return  null;
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is already an active flight");
         }
     }
 
-    @PostMapping("/close-tour/{pilotId}")
-    void closeFlight(@PathVariable Long pilotId) throws Exception {
-        Long pId = userRepository.findById(pilotId).getId();
-        List<Flight> flights = flightRepository.findByPilot_Id(pId);
-        Flight openFlight = null;
-        for (Flight tempFlight : flights) {
-            if (tempFlight.getOpen() == true) {
-                openFlight = tempFlight;
-            }
-        }
-        if (openFlight == null) {
-            throw new Exception("No open flight exists.");
-        } else {
-            flightRepository.deleteByPilot_Id(pId);
+
+    @PostMapping("/close-flight/{flightId}")
+    void closeFlight(@PathVariable int flightId, @RequestBody Flight flight) {
+
+        Flight closeFlight = flightRepository.findById(flightId).orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "No such flight exists"
+        ));
+
+        if (closeFlight.getOpen()) {
+            closeFlight.setOpen(false);
+            flightRepository.save(closeFlight);
+        }else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Flight is already closed");
         }
     }
 
     @GetMapping("/aircraft")
     List<Aircraft> getAllAircrafts() {
+
         return aircraftRepository.findAll();
     }
 
     @GetMapping("/tours")
     List<Tour> getAllTours() {
+
         return tourRepository.findAll();
     }
 
