@@ -8,7 +8,7 @@ import java.util.List;
 
 
 @Entity
-@Table(name="tour")
+@Table(name="tours")
 public class Tour {
 
     @Id     //primary key

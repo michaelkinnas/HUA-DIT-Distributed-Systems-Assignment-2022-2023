@@ -1,6 +1,6 @@
 ## **To create a docker image**
 ```bash
-docker run --name spb_db --rm -e  POSTGRES_PASSWORD=pass123 -e POSTGRES_DB=air_tours -p 5432:5432 -v pgdata14:/var/lib/postgresql/data  -d postgres:14
+docker run --name spb_db --rm -e  POSTGRES_PASSWORD=pass123 -e POSTGRES_DB=air_tours -p 5432:5432 -v group_35_main_data:/var/lib/postgresql/data  -d postgres:14
 ```
 ## **To remove db data**
 ```bash

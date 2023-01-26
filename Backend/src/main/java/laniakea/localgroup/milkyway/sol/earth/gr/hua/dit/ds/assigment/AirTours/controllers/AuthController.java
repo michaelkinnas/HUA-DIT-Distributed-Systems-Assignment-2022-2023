@@ -5,7 +5,7 @@ import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.e
 import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.entities.Role;
 import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.entities.User;
 import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.payload.request.LoginRequest;
-import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.payload.request.SignupRequest;
+import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.payload.request.RegisterRequest;
 import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.payload.response.JwtResponse;
 import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.payload.response.MessageResponse;
 import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.repository.RoleRepository;
@@ -68,24 +68,19 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: An error has occured!"));
-        }
+    public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
 
-        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+        if (userRepository.existsByEmail(registerRequest.getEmail())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Email is already in use!"));
         }
 
-        User user = new User(signUpRequest.getFirstName(),signUpRequest.getLastName(),
-                signUpRequest.getEmail(),
-                encoder.encode(signUpRequest.getPassword()));
+        User user = new User(registerRequest.getFirstName(),registerRequest.getLastName(),
+                registerRequest.getEmail(),
+                encoder.encode(registerRequest.getPassword()));
 
-        Set<String> strRoles = signUpRequest.getRole();
+        Set<String> strRoles = registerRequest.getRole();
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {

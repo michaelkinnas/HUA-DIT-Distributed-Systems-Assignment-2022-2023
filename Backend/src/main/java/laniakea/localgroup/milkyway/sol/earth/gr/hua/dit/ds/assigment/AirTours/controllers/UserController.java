@@ -31,30 +31,26 @@ public class UserController {
     FlightRepository flightRepository;
 
 
-    @GetMapping("flights")
-    List<Flight> getAllFlights() {
+    @GetMapping("/flights")
+    List<Flight> getAllOpenFlights() {
 
-        List<Flight> allFlights =  flightRepository.findAll();
-
-        //List<Flight> openFlights = Collections.emptyList();
         ArrayList<Flight> openFlights = new ArrayList<>();
-
-        for (Flight tempFlight : allFlights) {
-            if (tempFlight.getOpen()) {
-                openFlights.add(tempFlight);
+        for (Flight flight : flightRepository.findAll()) {
+            if (flight.getOpen()) {
+                openFlights.add(flight);
             }
         }
 
         if (openFlights.size() == 0) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No open flights available");
-        }else {
-            return openFlights;
         }
+
+        return openFlights;
     }
 
     //USER REGISTER TOUR SEAT
-    @PostMapping("flight-register/{flightId}")
-    List<Flight> registerFlight(@PathVariable int flightId, @RequestBody User user) {
+    @PostMapping("/flight-register/{flightId}")
+    List<Flight> registerToFlight(@PathVariable int flightId, @RequestBody User user) {
 
         User passenger = userRepository.findById(user.getId()).orElseThrow(() -> new ResponseStatusException(
                 HttpStatus.NOT_FOUND, "No such user exists"
@@ -66,10 +62,8 @@ public class UserController {
 
         List<User> passengers = flight.getPassengers();
 
-        List<Flight> flights = flightRepository.findAll();
-
-        for (Flight tempFlight : flights) {
-            if ((tempFlight.getPassengers().contains(passenger)) && (tempFlight.getOpen())) {
+        for (Flight flightIt : flightRepository.findAll()) {
+            if (flightIt.getPassengers().contains(passenger) && flightIt.getOpen()) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User is already registered in a flight");
             }
         }
@@ -84,7 +78,7 @@ public class UserController {
         return flightRepository.findAll();
     }
 
-    @PostMapping("flight-unregister/{flightId}")
+    @PostMapping("/flight-unregister/{flightId}")
     List<Flight> unregisterFlight(@PathVariable int flightId, @RequestBody User user) {
 
         User passenger = userRepository.findById(user.getId()).orElseThrow(() -> new ResponseStatusException(

@@ -34,7 +34,7 @@ public class AdminController {
     UserRepository userRepository;
 
     @GetMapping("/aircraft")
-    public List<Aircraft> getAllAircrafts() {
+    public List<Aircraft> getAllAircraft() {
 
         return aircraftRepository.findAll();
     }

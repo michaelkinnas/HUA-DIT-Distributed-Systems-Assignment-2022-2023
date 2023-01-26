@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name="users")
+@Table(name="users", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class User {
 
     // define fields
@@ -19,12 +19,21 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
+    @NotBlank
+    @Size(max = 50)
     private String firstname;
 
+    @NotBlank
+    @Size(max = 50)
     private String lastname;
 
+    @NotBlank
+    @Size(max = 50)
+    @Email
     private String email;
 
+    @NotBlank
+    @Size(max = 120)
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -76,7 +85,7 @@ public class User {
         return password;
     }
 
-    public void  setPassword() {
+    public void  setPassword(String password) {
         this.password = password;
     }
 
