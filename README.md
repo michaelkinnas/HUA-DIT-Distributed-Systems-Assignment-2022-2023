@@ -7,8 +7,9 @@ The project is composed of two parts. The backened application and the frontend 
 ## 1. Running the backend.
 
 The application uses PostgreSQL database using Docker. To run the database use:
-
-`docker run --name DS_Assigment_AirTours --rm -e  POSTGRES_PASSWORD=pass123 -e POSTGRES_DB=air_tours -p 5432:5432 -v group35_data_main:/var/lib/postgresql/data -d postgres:14`
+```bash
+docker run --name DS_Assigment_AirTours --rm -e  POSTGRES_PASSWORD=pass123 -e POSTGRES_DB=air_tours -p 5432:5432 -v group35_data_main:/var/lib/postgresql/data -d postgres:14
+```
 
 
 You can connect to the database using these details:
@@ -32,11 +33,15 @@ Navigate to the "DS-Assigment-2022-2023/frontend" directory.
 
 Install the dependencies by running:
 
-`npm install`
+```bash
+npm install
+```
 
 Once the depedencies are installed run:
 
-`npm start`
+```bash
+npm start
+```
 
 ###
 The application server runs on `http://localhost:8080`
