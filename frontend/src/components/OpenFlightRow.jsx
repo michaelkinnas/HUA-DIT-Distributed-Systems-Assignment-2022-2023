@@ -15,8 +15,8 @@ export default function OpenFlights({ flight, setFlights, setFeedback }) {
         const payload = {
             "id": userContextData.id,
             "email": userContextData.email,
-            "firstname": userContextData.firstname,
-            "lastname": userContextData.lastname
+            "firstName": userContextData.firstName,
+            "lastName": userContextData.lastName
         }
 
         async function callApi() {
@@ -45,8 +45,8 @@ export default function OpenFlights({ flight, setFlights, setFeedback }) {
         const payload = {
             "id": userContextData.id,
             "email": userContextData.email,
-            "firstname": userContextData.firstname,
-            "lastname": userContextData.lastname
+            "firstName": userContextData.firstName,
+            "lastName": userContextData.lastName
         }
 
         async function callApi() {
@@ -74,11 +74,11 @@ export default function OpenFlights({ flight, setFlights, setFeedback }) {
             <td>{flight.tour.location}</td>
             <td>{flight.tour.duration} hours</td>
             <td>{flight.aircraft.type}</td>
-            <td>{flight.pilot.firstname} {flight.pilot.lastname}</td>
-            <td>{flight.users.map((user) => (
-                <p key={user.id}>{user.firstname} {user.lastname}</p>
+            <td>{flight.pilot.firstName} {flight.pilot.lastName}</td>
+            <td>{flight.passengers.map((passenger) => (
+                <p key={passenger.id}>{passenger.firstName} {passenger.lastName}</p>
             ))}</td>
-            <td>{flight.users.some(user => user.id === userContextData.id) ? <button type="button" onClick={handleUnRegister}>Unregister</button> : <button type="button" onClick={handleRegister}>Take a seat!</button>}</td>
+            <td>{flight.passengers.some(passenger => passenger.id === userContextData.id) ? <button type="button" onClick={handleUnRegister}>Unregister</button> : <button type="button" onClick={handleRegister}>Take a seat!</button>}</td>
         </tr>
     )
 }

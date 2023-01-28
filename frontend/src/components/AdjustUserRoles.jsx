@@ -19,7 +19,7 @@ function AdjustUserRoles() {
                 const response = await axios.get(process.env.REACT_APP_AUTHORITY_URL + process.env.REACT_APP_GET_USERS_URL, config)
                 setUsers(response.data)
             } catch (error) {
-                console.log(error.response.data.message) //how to get body from axios error (really?)
+                console.log(error.response.data.message)
             }
         }
         callAPI()

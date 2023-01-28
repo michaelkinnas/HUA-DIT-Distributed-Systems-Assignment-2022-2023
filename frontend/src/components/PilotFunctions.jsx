@@ -97,7 +97,7 @@ export default function PilotFunctions() {
                     <label htmlFor="tours">Tour</label>
                     <select name="tours" id="tours" value={selectedTour} onChange={(e) => setSelectedTour(e.target.value)}>
                         {pilotSelectionForm.tours.map((tour) => (
-                            <option key={tour.id} value={tour.id}>{tour.name}</option>
+                            <option key={tour.id} value={tour.id}>{tour.description} - {tour.duration}hrs</option>
                         ))}
                     </select>
 
