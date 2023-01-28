@@ -59,9 +59,17 @@ public class UserController {
 
         List<User> passengers = flight.getPassengers();
 
+        //If passenger is already on another flight
         for (Flight flightIt : flightRepository.findAll()) {
-            if (flightIt.getPassengers().contains(passenger) && flightIt.getOpen()) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User is already registered in a flight");
+
+            if (flightIt.getOpen()) {
+                if (flightIt.getPassengers().contains(passenger)) {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User is already registered in a flight");
+                }
+
+                if (flightIt.getPilot().getId() == passenger.getId()) {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User is pilot in another flight");
+                }
             }
         }
 
@@ -69,10 +77,23 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No empty seats");
 
         }
+
         passengers.add(passenger);
         flight.setPassengers(passengers);
         flightRepository.save(flight);
-        return flightRepository.findAll();
+
+        ArrayList<Flight> openFlights = new ArrayList<>();
+        for (Flight flightIt : flightRepository.findAll()) {
+            if (flightIt.getOpen()) {
+                openFlights.add(flightIt);
+            }
+        }
+
+        if (openFlights.size() == 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No open flights available");
+        }
+
+        return openFlights;
     }
 
     @PostMapping("/flight-unregister/{flightId}")
@@ -94,6 +115,17 @@ public class UserController {
             flightRepository.save(flight);
 
         }
-        return flightRepository.findAll();
+        ArrayList<Flight> openFlights = new ArrayList<>();
+        for (Flight flightIt : flightRepository.findAll()) {
+            if (flightIt.getOpen()) {
+                openFlights.add(flightIt);
+            }
+        }
+
+        if (openFlights.size() == 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No open flights available");
+        }
+
+        return openFlights;
     }
 }

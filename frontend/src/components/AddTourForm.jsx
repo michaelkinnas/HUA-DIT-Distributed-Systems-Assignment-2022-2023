@@ -8,7 +8,7 @@ export default function AddTourForm({ setTourLocations, setFeedback }) {
     const { userContextData, setUserContextData } = useContext(UserContext);
 
     const [addTourForm, setAddTourForm] = useState({
-        name: '',
+        description: '',
         location: '',
         duration: 0
     })
@@ -61,8 +61,8 @@ export default function AddTourForm({ setTourLocations, setFeedback }) {
     return (
         <div className="add-aircraft">
             <form className="add-aircraft-form">
-                <label htmlFor="name">Tour name:</label>
-                <input type="text" name="name" id="name" className="add-aircraft-input-text" onChange={handleChange} value={addTourForm.name} />
+                <label htmlFor="description">Description:</label>
+                <input type="text" name="description" id="description" className="add-aircraft-input-text" onChange={handleChange} value={addTourForm.description} />
 
                 <label htmlFor="location">Location:</label>
                 <input type="text" name="location" id="location" className="add-aircraft-input-text" onChange={handleChange} value={addTourForm.location} />

@@ -42,7 +42,7 @@ function TourLocations() {
             <table className="tour-locations-table">
                 <thead>
                     <tr>
-                        <th>Tour name</th>
+                        <th>Description</th>
                         <th>Location</th>
                         <th>Duration</th>
                         <th>Option</th>
