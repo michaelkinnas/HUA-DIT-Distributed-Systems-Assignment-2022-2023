@@ -16,7 +16,7 @@ public class UserDetailsImpl implements UserDetails {
 
     private int id;
 
-    private  String firstName;
+    private String firstName;
 
     private String lastName;
 
@@ -65,11 +65,11 @@ public class UserDetailsImpl implements UserDetails {
     }
 
     public String getFirstName() {
-        return email;
+        return firstName;
     }
 
     public String getLastName() {
-        return email;
+        return lastName;
     }
 
     @Override

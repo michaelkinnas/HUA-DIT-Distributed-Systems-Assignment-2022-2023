@@ -1,7 +1,5 @@
 package laniakea.virgo.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.DBTesting;
 
-import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.entities.*;
-import laniakea.localgroup.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.repository.*;
 import laniakea.virgo.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.entities.*;
 import laniakea.virgo.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +9,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Component
@@ -133,6 +133,21 @@ public class DBInit {
             tour.setLocation("Athens");
 
             tourRepository.save(tour);
+        }
+
+        //Flight
+        if (flightRepository.count() == 0) {
+            Flight flight = new Flight();
+            flight.setName("Acropolis from above!");
+            flight.setAircraft(aircraftRepository.findById(4).orElseThrow());
+//            flight.setOpen(true);
+            flight.setPilot(userRepository.findById(2).orElseThrow());
+            flight.setTour(tourRepository.findById(5).orElseThrow());
+            List<User> passengers = new ArrayList<>();
+            passengers.add(userRepository.findById(1).orElseThrow());
+            passengers.add(userRepository.findById(3).orElseThrow());
+            flight.setPassengers(passengers);
+            flightRepository.save(flight);
         }
 
     }

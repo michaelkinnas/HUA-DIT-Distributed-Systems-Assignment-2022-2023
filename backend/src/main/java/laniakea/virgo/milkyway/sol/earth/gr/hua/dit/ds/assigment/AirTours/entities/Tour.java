@@ -21,9 +21,7 @@ public class Tour {
 
     private int duration;
 
-    // define constructors
     public Tour() {
-
     }
 
     public Tour(String description, String location, int duration) {
@@ -32,7 +30,6 @@ public class Tour {
         this.duration = duration;
     }
 
-    // define getters-setters
     public int getId() {
         return id;
     }

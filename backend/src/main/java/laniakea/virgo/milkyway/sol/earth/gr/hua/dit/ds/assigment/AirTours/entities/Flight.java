@@ -11,8 +11,8 @@ public class Flight {
     private int id;
 
     private String name;
-
-    private  boolean open;
+//    @ColumnDefault("true")
+    private boolean open = true;
 
     @OneToOne
     private User pilot;
@@ -30,9 +30,8 @@ public class Flight {
 
     public Flight() {}
 
-    public Flight(String name, boolean open, User pilot, List<User> passengers, Aircraft aircraft, Tour tour) {
+    public Flight(String name, User pilot, List<User> passengers, Aircraft aircraft, Tour tour) {
         this.name = name;
-        this.open = open;
         this.pilot = pilot;
         this.passengers = passengers;
         this.aircraft = aircraft;
