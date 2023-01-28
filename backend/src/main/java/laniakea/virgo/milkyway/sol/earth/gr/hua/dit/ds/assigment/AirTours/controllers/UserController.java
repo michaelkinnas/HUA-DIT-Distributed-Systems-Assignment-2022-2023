@@ -13,7 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 import java.util.List;
 
-// RestController manages JSONs
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/home")
 public class UserController {

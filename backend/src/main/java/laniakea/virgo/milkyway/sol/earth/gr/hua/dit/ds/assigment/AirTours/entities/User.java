@@ -2,6 +2,8 @@ package laniakea.virgo.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.entit
 
 
 
+import net.minidev.json.annotate.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -32,6 +34,7 @@ public class User {
     private String email;
 
     @NotBlank
+
     @Size(max = 120)
     private String password;
 
@@ -79,7 +82,7 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-
+    @JsonIgnore
     public String getPassword() {
         return password;
     }

@@ -16,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Set;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
