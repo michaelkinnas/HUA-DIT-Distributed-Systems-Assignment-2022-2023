@@ -9,8 +9,8 @@ function Register() {
     const [registerForm, setRegisterForm] = useState({
         email: '',
         password: '',
-        firstname: '',
-        lastname: ''
+        firstName: '',
+        lastName: ''
     })
 
     const handleChange = (event) => {
@@ -60,8 +60,8 @@ function Register() {
             <form className="register-form">
                 <input type="text" name="email" id="email" className="register-input-text" onChange={handleChange} value={registerForm.email} placeholder="email" />
                 <input type="password" name="password" id="password" className="register-input-text" onChange={handleChange} value={registerForm.password} placeholder="password" />
-                <input type="text" name="firstname" id="firstname" className="register-input-text" onChange={handleChange} value={registerForm.firstname} placeholder="First name" />
-                <input type="text" name="lastname" id="lastname" className="register-input-text" onChange={handleChange} value={registerForm.lastname} placeholder="Last name" />
+                <input type="text" name="firstName" id="firstName" className="register-input-text" onChange={handleChange} value={registerForm.firstName} placeholder="First name" />
+                <input type="text" name="lastName" id="lastName" className="register-input-text" onChange={handleChange} value={registerForm.lastName} placeholder="Last name" />
                 <input value="Register" type="submit" name="register" id="register" className="register-button" onClick={handleSubmit} />
             </form>
             <div className="register-error-feedback">

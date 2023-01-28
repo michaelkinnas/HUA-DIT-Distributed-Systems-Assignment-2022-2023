@@ -13,7 +13,7 @@ function Login() {
         email: '',
         password: ''
     })
-    const [error, setError] = useState('')
+    const [feedback, setFeedback] = useState('')
     const navigate = useNavigate()
 
     const handleChange = (event) => {
@@ -23,37 +23,43 @@ function Login() {
             ...values,
             [name]: value
         }))
-        setError('') //clear error message
+        setFeedback('') //clear error message
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
         if (loginForm.email === '' || loginForm.password === '') {
-            setError('You must provide an email and password')
+            setFeedback('You must provide an email and password')
         } else {
-            const LOGIN_URL = 'http://localhost:8080/authentication/login'
 
             async function fetchData() {
-                // const response = await axiosPost(URL, loginForm)
                 try {
-                    const response = await axios.post(process.env.REACT_APP_AUTHORITY_URL + process.env.REACT_APP_LOGIN_URL, loginForm);
+                    const response = await axios.post(`${process.env.REACT_APP_AUTHORITY_URL}${process.env.REACT_APP_LOGIN_URL}`, loginForm);
 
+                    console.log("User data " + response.data.firstName)
                     const userData = {
                         id: response.data.id,
                         email: response.data.email,
-                        firstname: response.data.firstname,
-                        lastname: response.data.lastname,
-                        accessToken: response.data.accessToken,
-                        tokenType: response.data.tokenType,
+                        firstName: response.data.firstName,
+                        lastName: response.data.lastName,
+                        accessToken: response.data.token,
+                        tokenType: response.data.type,
                         roles: response.data.roles
                     }
                     setUserContextData(userData)
-                    navigate("/home") //TEMP SOLUTION
+                    navigate("/home")
 
-                    // console.log(response.data);
+
                 } catch (error) {
-                    setError(error.response.data.message) //how to get body from axios error (really?)
+                    if (error.response) {
+                        console.log('Data: ' + error.response.data);
+                        console.log('Status: ' + error.response.status);
+                        console.log('Headers: ' + error.response.headers);
+                        if (error.response.data.message) {
+                            setFeedback(error.response.data.message);
+                        }
+                    }
                 }
             }
             fetchData();
@@ -75,7 +81,7 @@ function Login() {
             <hr width="330px" />
             <p className="register-paragraph">Not a member? <Link to="/register">Register</Link> now!</p>
             <div className="login-errors">
-                <b>{error}</b>
+                <b>{feedback}</b>
             </div>
 
         </div>

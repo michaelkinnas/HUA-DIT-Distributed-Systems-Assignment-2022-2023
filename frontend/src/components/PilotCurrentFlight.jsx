@@ -77,7 +77,7 @@ export default function PilotFunctions({ setFeedback }) {
                     <td>{flight.tour.duration} hours</td>
                     <td>{flight.aircraft.type}</td>
                     <td>{flight.users.map((user) => (
-                        <p key={user.id}>{user.firstname} {user.lastname}</p>
+                        <p key={user.id}>{user.firstName} {user.lastName}</p>
                     ))}</td>
                     <td> <button type="button" onClick={handleCloseFlight}>Close</button></td>
                 </tr>}

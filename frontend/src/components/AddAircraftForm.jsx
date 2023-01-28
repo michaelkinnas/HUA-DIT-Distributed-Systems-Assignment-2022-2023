@@ -22,7 +22,7 @@ export default function AddAircraftForm({ setAircraft, setFeedback }) {
             ...values,
             [name]: value
         }))
-        setFeedback('') //clear error message
+        setFeedback('')
     }
 
     const handleSubmit = (event) => {
@@ -36,7 +36,7 @@ export default function AddAircraftForm({ setAircraft, setFeedback }) {
 
         async function callAPI() {
             try {
-                const response = await axios.post(process.env.REACT_APP_AUTHORITY_URL + process.env.REACT_APP_ADD_AIRCRAFT_URL, addAircraftForm, config)
+                const response = await axios.post(`${process.env.REACT_APP_AUTHORITY_URL}${process.env.REACT_APP_ADD_AIRCRAFT_URL}`, addAircraftForm, config)
 
                 if (response.status === 200) {
                     setAircraft(response.data)
