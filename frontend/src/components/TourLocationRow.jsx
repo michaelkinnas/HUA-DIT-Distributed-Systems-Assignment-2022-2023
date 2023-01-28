@@ -33,9 +33,9 @@ function TourLocationRow({ tour, setTourLocations, setFeedback }) {
 
     return (
         <tr>
-            <td>{tour.name}</td>
+            <td>{tour.description}</td>
             <td>{tour.location}</td>
-            <td>{tour.duration}</td>
+            <td>{tour.duration} hrs</td>
             <td><input type="button" value="Remove" onClick={handleRemove} /></td>
         </tr>
     )

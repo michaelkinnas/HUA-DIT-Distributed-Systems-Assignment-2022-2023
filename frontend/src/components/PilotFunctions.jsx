@@ -16,6 +16,8 @@ export default function PilotFunctions() {
     const [flightName, setFlightName] = useState('')
     const [feedback, setFeedback] = useState('')
 
+    const [flight, setFlight] = useState()
+
     useEffect(() => {
         const config = {
             headers: { Authorization: `Bearer ${userContextData.accessToken}` }
@@ -33,6 +35,11 @@ export default function PilotFunctions() {
 
                 setPilotSelectionForm(data)
 
+                const response = await axios.get(`${process.env.REACT_APP_AUTHORITY_URL}${process.env.REACT_APP_PILOT_CURRENT_ACTIVE_FLIGHT_URL}${userContextData.id}`, config)
+
+                setFlight(response.data)
+
+
             } catch (error) {
                 if (error.response) {
                     console.log('Data: ' + error.response.data);
@@ -47,12 +54,15 @@ export default function PilotFunctions() {
         callAPI()
     }, [])
 
+
+
+
     function handleCreateFlight() {
         async function callAPI() {
             try {
                 const payload = {
                     name: flightName,
-                    open: true,
+                    // open: true,
                     pilot: {
                         id: userContextData.id
                     },
@@ -64,6 +74,8 @@ export default function PilotFunctions() {
                     }
                 }
 
+                console.log(payload)
+
                 const config = {
                     headers: { Authorization: `Bearer ${userContextData.accessToken}` }
                 }
@@ -71,7 +83,9 @@ export default function PilotFunctions() {
                 const response = await axios.post(`${process.env.REACT_APP_AUTHORITY_URL}${process.env.REACT_APP_PILOT_CREATE_FLIGHT_URL}${userContextData.id}`, payload, config)
 
                 if (response.status === 200) {
+                    // setFlight(response.data)
                     setFeedback('Flight created sucessfully');
+
                 }
 
             } catch (error) {
@@ -96,6 +110,7 @@ export default function PilotFunctions() {
                 <form>
                     <label htmlFor="tours">Tour</label>
                     <select name="tours" id="tours" value={selectedTour} onChange={(e) => setSelectedTour(e.target.value)}>
+                        <option value="0"> -- select an option -- </option>
                         {pilotSelectionForm.tours.map((tour) => (
                             <option key={tour.id} value={tour.id}>{tour.description} - {tour.duration}hrs</option>
                         ))}
@@ -103,6 +118,7 @@ export default function PilotFunctions() {
 
                     <label htmlFor="aircraft">Aircraft</label>
                     <select name="aircraft" id="aircraft" value={selectedAircraft} onChange={(e) => setSelectedAircraft(e.target.value)}>
+                        <option value="0"> -- select an option -- </option>
                         {pilotSelectionForm.aircraft.map((aircraft) => (
                             <option key={aircraft.id} value={aircraft.id}>{aircraft.registration} - {aircraft.type}</option>
                         ))}
@@ -111,7 +127,8 @@ export default function PilotFunctions() {
                     <input type="text" name="flightName" id="flightName" value={flightName} onChange={(e) => setFlightName(e.target.value)} />
                     <input type="button" value="Create Flight" onClick={handleCreateFlight} />
                 </form>
-                <PilotCurrentFlight setFeedback={setFeedback} />
+                <PilotCurrentFlight setFeedback={setFeedback} flight={flight} setFlight={setFlight} />
+
                 <h4 className="feedback">{feedback}</h4>
             </div>
         </div>
