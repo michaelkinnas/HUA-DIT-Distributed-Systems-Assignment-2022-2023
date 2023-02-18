@@ -1,23 +1,20 @@
 package laniakea.virgo.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.entities;
 
-import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+
 
 @Entity
 @Table(name="aircraft")
 public class Aircraft {
-
-    // define fields
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.TABLE)
     private int id;
+
 
     private String type;
 
@@ -25,7 +22,6 @@ public class Aircraft {
 
     private String registration;
 
-    //define constructors
     public Aircraft() {}
 
     public Aircraft(String type, int numberOfSeats, String registration) {
@@ -35,7 +31,6 @@ public class Aircraft {
 
     }
 
-    // define getters-setters
     public int getId() {
         return id;
     }

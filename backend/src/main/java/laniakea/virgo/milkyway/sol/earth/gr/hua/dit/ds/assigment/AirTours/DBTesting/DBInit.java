@@ -30,7 +30,7 @@ public class DBInit {
     private FlightRepository flightRepository;
 
     @Autowired
-    PasswordEncoder encoder;
+    private PasswordEncoder encoder;
 
     @PostConstruct
     private void postConstruct() {
@@ -110,7 +110,7 @@ public class DBInit {
             Set<Role> userRoles = user.getRoles();
 
             userRoles.add(userRole);
-            user.setRoles(pilotRoles);
+            user.setRoles(userRoles);
 
             userRepository.save(user);
         }
@@ -139,16 +139,14 @@ public class DBInit {
         if (flightRepository.count() == 0) {
             Flight flight = new Flight();
             flight.setName("Acropolis from above!");
-            flight.setAircraft(aircraftRepository.findById(4).orElseThrow());
-//            flight.setOpen(true);
-            flight.setPilot(userRepository.findById(2).orElseThrow());
-            flight.setTour(tourRepository.findById(5).orElseThrow());
+            flight.setAircraft(aircraftRepository.findById(7).orElseThrow());
+            flight.setPilot(userRepository.findById(5).orElseThrow());
+            flight.setTour(tourRepository.findById(8).orElseThrow());
             List<User> passengers = new ArrayList<>();
-            passengers.add(userRepository.findById(1).orElseThrow());
-            passengers.add(userRepository.findById(3).orElseThrow());
+            passengers.add(userRepository.findById(4).orElseThrow());
+            passengers.add(userRepository.findById(6).orElseThrow());
             flight.setPassengers(passengers);
             flightRepository.save(flight);
         }
-
     }
 }

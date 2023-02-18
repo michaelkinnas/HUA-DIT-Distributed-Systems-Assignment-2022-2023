@@ -7,18 +7,20 @@ import java.util.List;
 @Table(name="flights")
 public class Flight {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.TABLE)
     private int id;
 
     private String name;
-//    @ColumnDefault("true")
+
     private boolean open = true;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.MERGE)
     private User pilot;
 
-    @OneToMany(cascade = CascadeType.MERGE)
+
+    @ManyToMany(cascade = CascadeType.MERGE)
     private List<User> passengers;
+
 
     @OneToOne(cascade = CascadeType.MERGE)
     private Aircraft aircraft;
