@@ -14,10 +14,8 @@ import java.util.Set;
 @Entity
 @Table(name="users", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class User {
-
-    // define fields
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.TABLE)
     private int id;
 
     @NotBlank
@@ -34,13 +32,11 @@ public class User {
     private String email;
 
     @NotBlank
-
     @Size(max = 120)
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<Role> roles = new HashSet<>();
-
 
     public User() {}
 
@@ -91,7 +87,6 @@ public class User {
         this.password = password;
     }
 
-
     public Set<Role> getRoles() {
         return roles;
     }
@@ -99,8 +94,6 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
-
-
 
     // print fields
     public String toString() {

@@ -51,7 +51,7 @@ public class PilotController {
         }
         int id = flightRepository.save(flight).getId();
 
-        return  flightRepository.findById(id).orElseThrow(() -> new ResponseStatusException(
+        return flightRepository.findById(id).orElseThrow(() -> new ResponseStatusException(
                 HttpStatus.NOT_FOUND, "No such flight exists"
         ));
     }

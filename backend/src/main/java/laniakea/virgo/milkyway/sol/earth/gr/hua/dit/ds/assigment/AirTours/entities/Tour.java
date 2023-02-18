@@ -1,18 +1,12 @@
 package laniakea.virgo.milkyway.sol.earth.gr.hua.dit.ds.assigment.AirTours.entities;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
-import java.util.List;
-
 
 @Entity
 @Table(name="tours")
 public class Tour {
-
-    @Id     //primary key
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy= GenerationType.TABLE)
     private int id;
 
     private String description;
