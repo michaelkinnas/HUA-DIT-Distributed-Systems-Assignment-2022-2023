@@ -49,6 +49,7 @@ public class PilotController {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Pilot already has active flight");
             }
         }
+
         int id = flightRepository.save(flight).getId();
 
         return flightRepository.findById(id).orElseThrow(() -> new ResponseStatusException(

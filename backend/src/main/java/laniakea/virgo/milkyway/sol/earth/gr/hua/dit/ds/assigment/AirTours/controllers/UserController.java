@@ -19,17 +19,17 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    TourRepository tourRepository;
+    private TourRepository tourRepository;
 
     @Autowired
-    FlightRepository flightRepository;
+    private FlightRepository flightRepository;
 
 
     @GetMapping("/flights")
-    List<Flight> getAllOpenFlights() {
+    public List<Flight> getAllOpenFlights() {
 
         ArrayList<Flight> openFlights = new ArrayList<>();
         for (Flight flight : flightRepository.findAll()) {
@@ -47,7 +47,7 @@ public class UserController {
 
     //USER REGISTER TOUR SEAT
     @PostMapping("/flight-register/{flightId}")
-    List<Flight> registerToFlight(@PathVariable int flightId, @RequestBody User user) {
+    public List<Flight> registerToFlight(@PathVariable int flightId, @RequestBody User user) {
 
         User passenger = userRepository.findById(user.getId()).orElseThrow(() -> new ResponseStatusException(
                 HttpStatus.NOT_FOUND, "No such user exists"
@@ -97,7 +97,7 @@ public class UserController {
     }
 
     @PostMapping("/flight-unregister/{flightId}")
-    List<Flight> unregisterFlight(@PathVariable int flightId, @RequestBody User user) {
+    public List<Flight> unregisterFlight(@PathVariable int flightId, @RequestBody User user) {
 
         User passenger = userRepository.findById(user.getId()).orElseThrow(() -> new ResponseStatusException(
                 HttpStatus.NOT_FOUND, "No such user exists"

@@ -22,16 +22,16 @@ import java.util.Set;
 public class AdminController {
 
     @Autowired
-    AircraftRepository aircraftRepository;
+    private AircraftRepository aircraftRepository;
 
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
 
     @Autowired
-    TourRepository tourRepository;
+    private TourRepository tourRepository;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @GetMapping("/aircraft")
     public List<Aircraft> getAllAircraft() {
